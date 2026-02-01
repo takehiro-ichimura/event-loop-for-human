@@ -3,16 +3,32 @@
  *
  * Microtask Queueエリアを表示するコンポーネント。
  * Task Queueより優先度が高い派生タスクのキューを管理します。
+ * ドラッグ&ドロップによる並べ替えをサポートします。
  */
 
 import React from 'react';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import type { Task } from '@/types';
-import { TaskList } from '@/components/task/TaskList';
+import { SortableTaskCard } from '@/components/task/SortableTaskCard';
 import { theme } from '@/styles/theme';
 
 export interface MicrotaskQueueProps {
   tasks: Task[];
   onTaskClick?: (task: Task) => void;
+  onReorder?: (taskId: string, newIndex: number) => void;
 }
 
 const styles = {
@@ -73,16 +89,45 @@ const styles = {
   },
   content: {
     padding: theme.spacing.md,
+    paddingLeft: '40px',
     flex: 1,
     overflowY: 'auto' as const,
+  },
+  empty: {
+    fontFamily: theme.fonts.mono,
+    fontSize: '12px',
+    color: theme.colors.text.muted,
+    textAlign: 'center' as const,
+    padding: theme.spacing.lg,
+    border: `1px dashed ${theme.colors.border.inactive}`,
+    borderRadius: theme.borderRadius.md,
   },
 } as const;
 
 export const MicrotaskQueue: React.FC<MicrotaskQueueProps> = ({
   tasks,
   onTaskClick,
+  onReorder,
 }) => {
   const sortedTasks = [...tasks].sort((a, b) => a.order - b.order);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id && onReorder) {
+      const newIndex = sortedTasks.findIndex((t) => t.id === over.id);
+      if (newIndex !== -1) {
+        onReorder(active.id as string, newIndex);
+      }
+    }
+  };
 
   return (
     <div style={styles.container}>
@@ -95,11 +140,29 @@ export const MicrotaskQueue: React.FC<MicrotaskQueueProps> = ({
         <span style={styles.count}>{tasks.length}</span>
       </div>
       <div style={styles.content}>
-        <TaskList
-          tasks={sortedTasks}
-          emptyMessage="// No microtasks"
-          onTaskClick={onTaskClick}
-        />
+        {sortedTasks.length === 0 ? (
+          <div style={styles.empty}>// No microtasks</div>
+        ) : (
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={sortedTasks.map((t) => t.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              {sortedTasks.map((task) => (
+                <SortableTaskCard
+                  key={task.id}
+                  id={task.id}
+                  task={task}
+                  onClick={onTaskClick ? () => onTaskClick(task) : undefined}
+                />
+              ))}
+            </SortableContext>
+          </DndContext>
+        )}
       </div>
     </div>
   );
