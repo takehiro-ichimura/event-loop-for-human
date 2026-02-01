@@ -216,14 +216,14 @@
 
 #### ドラッグ&ドロップ実装
 
-- [ ] T058 [US4] useEventLoop.ts に REORDER_QUEUEアクションを追加（キュー内並べ替え）
-- [ ] T059 [P] [US4] TaskQueue.tsx を更新（@dnd-kitのDndContext、SortableContextを統合）
-- [ ] T060 [P] [US4] MicrotaskQueue.tsx を更新（@dnd-kitのDndContext、SortableContextを統合）
-- [ ] T061 [US4] TaskCard.tsx を更新（useSortable フックを適用、ドラッグハンドル追加）
+- [X] T058 [US4] useEventLoop.ts に REORDER_QUEUEアクションを追加（キュー内並べ替え）
+- [X] T059 [P] [US4] TaskQueue.tsx を更新（@dnd-kitのDndContext、SortableContextを統合）
+- [X] T060 [P] [US4] MicrotaskQueue.tsx を更新（@dnd-kitのDndContext、SortableContextを統合）
+- [X] T061 [US4] TaskCard.tsx を更新（useSortable フックを適用、ドラッグハンドル追加）
 
 #### 動作確認
 
-- [ ] T062 [US4] 動作確認：Task Queue内でタスクをドラッグ&ドロップ → 順序変更 → Call Stack投入順序が変わることを確認
+- [X] T062 [US4] 動作確認：Task Queue内でタスクをドラッグ&ドロップ → 順序変更 → Call Stack投入順序が変わることを確認
 
 ---
 
