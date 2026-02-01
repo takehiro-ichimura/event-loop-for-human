@@ -8,7 +8,6 @@
 import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import type { Task } from '@/types';
 import { TaskCard, TaskCardProps } from './TaskCard';
 import { theme } from '@/styles/theme';
 
