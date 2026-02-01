@@ -39,16 +39,16 @@
 
 ### タスク一覧
 
-- [ ] T001 Viteプロジェクトを作成（`npm create vite@latest . -- --template react-ts`）
-- [ ] T002 [P] package.jsonに依存パッケージを追加（@dnd-kit/core, @dnd-kit/sortable, vitest, @testing-library/react, @testing-library/user-event）
-- [ ] T003 npm installで依存パッケージをインストール
-- [ ] T004 [P] tsconfig.jsonを更新（strict mode有効、パスエイリアス設定）
-- [ ] T005 [P] vite.config.tsを設定（Vitestプラグイン、パスエイリアス）
-- [ ] T006 [P] src/ディレクトリ構造を作成（components/, hooks/, types/, utils/, styles/）
-- [ ] T007 [P] tests/ディレクトリ構造を作成（unit/hooks/, unit/utils/, integration/）
-- [ ] T008 [P] .gitignoreを確認・更新（node_modules, dist, .env等）
-- [ ] T009 [P] index.htmlのタイトルとmetaタグを設定
-- [ ] T010 プロジェクトが正常に起動することを確認（`npm run dev`）
+- [X] T001 Viteプロジェクトを作成（`npm create vite@latest . -- --template react-ts`）
+- [X] T002 [P] package.jsonに依存パッケージを追加（@dnd-kit/core, @dnd-kit/sortable, vitest, @testing-library/react, @testing-library/user-event）
+- [X] T003 npm installで依存パッケージをインストール
+- [X] T004 [P] tsconfig.jsonを更新（strict mode有効、パスエイリアス設定）
+- [X] T005 [P] vite.config.tsを設定（Vitestプラグイン、パスエイリアス）
+- [X] T006 [P] src/ディレクトリ構造を作成（components/, hooks/, types/, utils/, styles/）
+- [X] T007 [P] tests/ディレクトリ構造を作成（unit/hooks/, unit/utils/, integration/）
+- [X] T008 [P] .gitignoreを確認・更新（node_modules, dist, .env等）
+- [X] T009 [P] index.htmlのタイトルとmetaタグを設定
+- [X] T010 プロジェクトが正常に起動することを確認（`npm run dev`）
 
 ---
 
