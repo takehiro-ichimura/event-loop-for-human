@@ -17,7 +17,8 @@ import { MicrotaskQueue } from '@/components/areas/MicrotaskQueue';
 import { TaskQueue } from '@/components/areas/TaskQueue';
 import { WebAPI } from '@/components/areas/WebAPI';
 import { TaskForm } from '@/components/task/TaskForm';
-import type { AreaType } from '@/types';
+import { TaskEditModal } from '@/components/task/TaskEditModal';
+import type { Task, AreaType } from '@/types';
 import { theme } from '@/styles/theme';
 
 const loadingStyles = {
@@ -43,6 +44,7 @@ function AppContent() {
     blockTask,
     moveTask,
     reorderQueue,
+    updateTask,
     loadState,
   } = useEventLoop();
 
@@ -55,6 +57,7 @@ function AppContent() {
 
   const [initialized, setInitialized] = useState(false);
   const [warningDismissed, setWarningDismissed] = useState(false);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   // 初回マウント時にLocalStorageからデータを復元
   useEffect(() => {
@@ -89,6 +92,21 @@ function AppContent() {
     reorderQueue('microtaskQueue', taskId, newIndex);
   };
 
+  const handleTaskClick = (task: Task) => {
+    setEditingTask(task);
+  };
+
+  const handleSaveTask = (updates: {
+    name?: string;
+    estimatedTime?: number | null;
+    category?: string | null;
+    memo?: string | null;
+  }) => {
+    if (editingTask) {
+      updateTask(editingTask.id, updates);
+    }
+  };
+
   // ローディング中
   if (!isLoaded || !initialized) {
     return (
@@ -112,24 +130,28 @@ function AppContent() {
             task={state.callStack}
             onComplete={completeTask}
             onBlock={blockTask}
+            onTaskClick={handleTaskClick}
           />
         }
         microtaskQueue={
           <MicrotaskQueue
             tasks={state.microtaskQueue}
             onReorder={handleReorderMicrotaskQueue}
+            onTaskClick={handleTaskClick}
           />
         }
         taskQueue={
           <TaskQueue
             tasks={state.taskQueue}
             onReorder={handleReorderTaskQueue}
+            onTaskClick={handleTaskClick}
           />
         }
         webAPI={
           <WebAPI
             tasks={state.webAPI}
             onMoveTask={moveTask}
+            onTaskClick={handleTaskClick}
           />
         }
         sidebar={
@@ -140,6 +162,14 @@ function AppContent() {
           />
         }
       />
+      {editingTask && (
+        <TaskEditModal
+          task={editingTask}
+          isOpen={true}
+          onClose={() => setEditingTask(null)}
+          onSave={handleSaveTask}
+        />
+      )}
     </>
   );
 }

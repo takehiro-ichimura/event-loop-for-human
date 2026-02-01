@@ -200,3 +200,142 @@ textarea::placeholder {
   width: 100%;
   min-height: 100vh;
 }
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--duration-normal) var(--easing-ease) forwards;
+}
+
+.animate-fade-out {
+  animation: fadeOut var(--duration-slow) var(--easing-ease) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--duration-normal) var(--easing-ease) forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn var(--duration-normal) var(--easing-ease) forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s var(--easing-ease) infinite;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  /* Stack layout on mobile */
+  .main-layout-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--spacing-md);
+  }
+
+  .main-layout-sidebar {
+    width: 100% !important;
+    order: -1; /* Form at top on mobile */
+  }
+
+  .main-layout-content {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .main-layout-area {
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --spacing-xs: 2px;
+    --spacing-sm: 4px;
+    --spacing-md: 8px;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+  }
+
+  button {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.75rem;
+  }
+
+  input,
+  textarea {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.75rem;
+  }
+}
