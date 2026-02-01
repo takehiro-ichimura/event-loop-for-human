@@ -42,6 +42,7 @@ function AppContent() {
     completeTask,
     blockTask,
     moveTask,
+    reorderQueue,
     loadState,
   } = useEventLoop();
 
@@ -80,6 +81,14 @@ function AppContent() {
     addTask(name, area, options);
   };
 
+  const handleReorderTaskQueue = (taskId: string, newIndex: number) => {
+    reorderQueue('taskQueue', taskId, newIndex);
+  };
+
+  const handleReorderMicrotaskQueue = (taskId: string, newIndex: number) => {
+    reorderQueue('microtaskQueue', taskId, newIndex);
+  };
+
   // ローディング中
   if (!isLoaded || !initialized) {
     return (
@@ -106,10 +115,16 @@ function AppContent() {
           />
         }
         microtaskQueue={
-          <MicrotaskQueue tasks={state.microtaskQueue} />
+          <MicrotaskQueue
+            tasks={state.microtaskQueue}
+            onReorder={handleReorderMicrotaskQueue}
+          />
         }
         taskQueue={
-          <TaskQueue tasks={state.taskQueue} />
+          <TaskQueue
+            tasks={state.taskQueue}
+            onReorder={handleReorderTaskQueue}
+          />
         }
         webAPI={
           <WebAPI
