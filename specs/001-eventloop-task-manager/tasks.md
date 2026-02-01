@@ -268,29 +268,29 @@
 
 #### アニメーション追加
 
-- [ ] T071 [P] TaskCard.tsx にタスク移動アニメーションを追加（フェード＆スライド 250ms）
-- [ ] T072 [P] CallStack.tsx にCall Stack投入アニメーションを追加（スケールイン 250ms）
-- [ ] T073 [P] TaskCard.tsx にタスク完了アニメーションを追加（フェードアウト 400ms）
+- [X] T071 [P] TaskCard.tsx にタスク移動アニメーションを追加（フェード＆スライド 250ms）
+- [X] T072 [P] CallStack.tsx にCall Stack投入アニメーションを追加（スケールイン 250ms）
+- [X] T073 [P] TaskCard.tsx にタスク完了アニメーションを追加（フェードアウト 400ms）
 
 #### レスポンシブ対応
 
-- [ ] T074 [P] MainLayout.tsx のCSSをモバイル対応に調整（768px以下で縦積みレイアウト）
-- [ ] T075 [P] TaskForm.tsx をモバイル画面サイズに最適化
+- [X] T074 [P] MainLayout.tsx のCSSをモバイル対応に調整（768px以下で縦積みレイアウト）
+- [X] T075 [P] TaskForm.tsx をモバイル画面サイズに最適化
 
 #### エッジケース対応
 
-- [ ] T076 [P] すべてのエリアが空の時の空状態UIを追加（各エリアコンポーネント）
-- [ ] T077 [P] LocalStorage容量警告を実装（80%超過時に警告表示）
+- [X] T076 [P] すべてのエリアが空の時の空状態UIを追加（各エリアコンポーネント）
+- [X] T077 [P] LocalStorage容量警告を実装（80%超過時に警告表示）
 - [ ] T078 [P] Microtask Queue連続処理の一時停止UI追加（5タスクごとに「続行」ボタン表示、オプション機能）
 
 #### Firebase Hosting設定
 
-- [ ] T079 [P] firebase.json を作成（hosting設定、SPAリライトルール）
-- [ ] T080 [P] .firebaserc を作成（プロジェクトID設定）
+- [X] T079 [P] firebase.json を作成（hosting設定、SPAリライトルール）
+- [X] T080 [P] .firebaserc を作成（プロジェクトID設定）
 
 #### 最終ビルドと動作確認
 
-- [ ] T081 プロダクションビルド（`npm run build`）
+- [X] T081 プロダクションビルド（`npm run build`）
 - [ ] T082 ビルド成果物のプレビュー（`npm run preview`）
 - [ ] T083 すべてのユーザーストーリーの受け入れシナリオを手動テスト
 - [ ] T084 Firebase Hostingへデプロイ（`firebase deploy`）
