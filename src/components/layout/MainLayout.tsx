@@ -3,6 +3,7 @@
  *
  * 4つのエリア（Call Stack、Microtask Queue、Task Queue、Web API）を
  * グリッドレイアウトで配置するメインレイアウトコンポーネント。
+ * レスポンシブ対応：768px以下で縦積みレイアウト
  */
 
 import React from 'react';
@@ -67,6 +68,36 @@ const styles = {
   },
 } as const;
 
+// Inline media query styles for responsive layout
+const getResponsiveStyles = () => {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+
+  if (isMobile) {
+    return {
+      main: {
+        ...styles.main,
+        flexDirection: 'column' as const,
+      },
+      content: {
+        ...styles.content,
+        gridTemplateColumns: '1fr',
+        gridTemplateRows: 'repeat(4, minmax(200px, auto))',
+      },
+      sidebar: {
+        ...styles.sidebar,
+        width: '100%',
+        order: -1,
+      },
+    };
+  }
+
+  return {
+    main: styles.main,
+    content: styles.content,
+    sidebar: styles.sidebar,
+  };
+};
+
 export const MainLayout: React.FC<MainLayoutProps> = ({
   callStack,
   microtaskQueue,
@@ -74,6 +105,17 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   webAPI,
   sidebar,
 }) => {
+  const [responsiveStyles, setResponsiveStyles] = React.useState(getResponsiveStyles());
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setResponsiveStyles(getResponsiveStyles());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div style={styles.container}>
       <header style={styles.header}>
@@ -83,14 +125,18 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
         </h1>
       </header>
 
-      <main style={styles.main}>
-        <div style={styles.content}>
-          <div style={styles.area}>{callStack}</div>
-          <div style={styles.area}>{microtaskQueue}</div>
-          <div style={styles.area}>{taskQueue}</div>
-          <div style={styles.area}>{webAPI}</div>
+      <main style={responsiveStyles.main}>
+        <div style={responsiveStyles.content} className="main-layout-content">
+          <div style={styles.area} className="main-layout-area">{callStack}</div>
+          <div style={styles.area} className="main-layout-area">{microtaskQueue}</div>
+          <div style={styles.area} className="main-layout-area">{taskQueue}</div>
+          <div style={styles.area} className="main-layout-area">{webAPI}</div>
         </div>
-        {sidebar && <aside style={styles.sidebar}>{sidebar}</aside>}
+        {sidebar && (
+          <aside style={responsiveStyles.sidebar} className="main-layout-sidebar">
+            {sidebar}
+          </aside>
+        )}
       </main>
     </div>
   );
