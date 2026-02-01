@@ -46,3 +46,28 @@ export function validateTask(task: Partial<Task>): string[] {
 export function isTaskValid(task: Partial<Task>): boolean {
   return validateTask(task).length === 0;
 }
+
+/**
+ * Result of task name validation
+ */
+export interface TaskNameValidationResult {
+  valid: boolean;
+  error?: string;
+}
+
+/**
+ * Validates just the task name
+ * @param name - Task name to validate
+ * @returns Validation result with valid flag and optional error message
+ */
+export function validateTaskName(name: string): TaskNameValidationResult {
+  if (!name || name.trim().length === 0) {
+    return { valid: false, error: 'タスク名は必須です' };
+  }
+
+  if (name.length > 200) {
+    return { valid: false, error: 'タスク名は200文字以内で入力してください' };
+  }
+
+  return { valid: true };
+}
