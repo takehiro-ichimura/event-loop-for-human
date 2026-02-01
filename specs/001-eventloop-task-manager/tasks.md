@@ -58,13 +58,13 @@
 
 ### タスク一覧
 
-- [ ] T011 [P] specs/001-eventloop-task-manager/contracts/ から src/types/ に型定義ファイルをコピー（task.types.ts, area.types.ts, storage.types.ts, index.ts）
-- [ ] T012 [P] src/styles/theme.ts を作成（カラーパレット、フォント、アニメーション定義）
-- [ ] T013 [P] src/styles/globals.css を作成（ターミナル風ダークテーマ、リセットCSS）
-- [ ] T014 [P] Google Fontsから Fira Code フォントを読み込む設定を index.html に追加
-- [ ] T015 [P] src/utils/validation.ts を作成（Task型のバリデーション関数）
-- [ ] T016 [P] src/utils/taskFactory.ts を作成（createTask関数）
-- [ ] T017 基盤コンポーネントのビルドが通ることを確認（`npm run build`）
+- [X] T011 [P] specs/001-eventloop-task-manager/contracts/ から src/types/ に型定義ファイルをコピー（task.types.ts, area.types.ts, storage.types.ts, index.ts）
+- [X] T012 [P] src/styles/theme.ts を作成（カラーパレット、フォント、アニメーション定義）
+- [X] T013 [P] src/styles/globals.css を作成（ターミナル風ダークテーマ、リセットCSS）
+- [X] T014 [P] Google Fontsから Fira Code フォントを読み込む設定を index.html に追加
+- [X] T015 [P] src/utils/validation.ts を作成（Task型のバリデーション関数）
+- [X] T016 [P] src/utils/taskFactory.ts を作成（createTask関数）
+- [X] T017 基盤コンポーネントのビルドが通ることを確認（`npm run build`）
 
 ---
 
