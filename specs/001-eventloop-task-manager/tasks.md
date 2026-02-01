@@ -82,27 +82,27 @@
 
 #### イベントループロジック
 
-- [ ] T018 [US1] src/hooks/useEventLoop.ts を作成（useReducer でイベントループ状態管理の骨組み）
-- [ ] T019 [US1] useEventLoop.ts に EventLoopAction型を定義（COMPLETE_TASK, ADD_TASK, AUTO_DISPATCH等）
-- [ ] T020 [US1] useEventLoop.ts に eventLoopReducer関数を実装（COMPLETE_TASKアクション処理）
-- [ ] T021 [US1] useEventLoop.ts に ADD_TASKアクションの処理を実装
-- [ ] T022 [US1] useEventLoop.ts に AUTO_DISPATCHアクションの処理を実装（Task Queue → Call Stack投入）
-- [ ] T023 [US1] useEventLoop.ts に useEffect で自動投入ロジックを実装（Call Stack空時のトリガー）
+- [X] T018 [US1] src/hooks/useEventLoop.ts を作成（useReducer でイベントループ状態管理の骨組み）
+- [X] T019 [US1] useEventLoop.ts に EventLoopAction型を定義（COMPLETE_TASK, ADD_TASK, AUTO_DISPATCH等）
+- [X] T020 [US1] useEventLoop.ts に eventLoopReducer関数を実装（COMPLETE_TASKアクション処理）
+- [X] T021 [US1] useEventLoop.ts に ADD_TASKアクションの処理を実装
+- [X] T022 [US1] useEventLoop.ts に AUTO_DISPATCHアクションの処理を実装（Task Queue → Call Stack投入）
+- [X] T023 [US1] useEventLoop.ts に useEffect で自動投入ロジックを実装（Call Stack空時のトリガー）
 
 #### UIコンポーネント
 
-- [ ] T024 [P] [US1] src/components/task/TaskCard.tsx を作成（タスク表示カード、完了ボタン付き）
-- [ ] T025 [P] [US1] src/components/task/TaskForm.tsx を作成（新規タスク追加フォーム、投入先選択UI）
-- [ ] T026 [P] [US1] src/components/task/TaskList.tsx を作成（タスク一覧表示、空状態メッセージ）
-- [ ] T027 [P] [US1] src/components/areas/CallStack.tsx を作成（Call Stackエリア、最大1タスク表示、完了ボタン）
-- [ ] T028 [P] [US1] src/components/areas/TaskQueue.tsx を作成（Task Queueエリア、タスクリスト表示）
-- [ ] T029 [P] [US1] src/components/layout/MainLayout.tsx を作成（4エリアのグリッドレイアウト、レスポンシブ対応）
+- [X] T024 [P] [US1] src/components/task/TaskCard.tsx を作成（タスク表示カード、完了ボタン付き）
+- [X] T025 [P] [US1] src/components/task/TaskForm.tsx を作成（新規タスク追加フォーム、投入先選択UI）
+- [X] T026 [P] [US1] src/components/task/TaskList.tsx を作成（タスク一覧表示、空状態メッセージ）
+- [X] T027 [P] [US1] src/components/areas/CallStack.tsx を作成（Call Stackエリア、最大1タスク表示、完了ボタン）
+- [X] T028 [P] [US1] src/components/areas/TaskQueue.tsx を作成（Task Queueエリア、タスクリスト表示）
+- [X] T029 [P] [US1] src/components/layout/MainLayout.tsx を作成（4エリアのグリッドレイアウト、レスポンシブ対応）
 
 #### 統合と動作確認
 
-- [ ] T030 [US1] src/App.tsx を更新（useEventLoopフックを使用、MainLayoutを配置）
-- [ ] T031 [US1] src/main.tsx にグローバルスタイルをインポート
-- [ ] T032 [US1] 動作確認：Task Queueにタスクを追加 → Call Stackに自動投入 → 完了ボタンで次のタスクが投入
+- [X] T030 [US1] src/App.tsx を更新（useEventLoopフックを使用、MainLayoutを配置）
+- [X] T031 [US1] src/main.tsx にグローバルスタイルをインポート
+- [X] T032 [US1] 動作確認：Task Queueにタスクを追加 → Call Stackに自動投入 → 完了ボタンで次のタスクが投入
 
 ---
 
@@ -119,26 +119,26 @@
 
 #### LocalStorage操作
 
-- [ ] T033 [P] [US6] src/utils/storage.ts を作成（saveToLocalStorage, loadFromLocalStorage関数）
-- [ ] T034 [P] [US6] src/utils/storage.ts にエラーハンドリングを実装（QuotaExceededError, SecurityError対応）
-- [ ] T035 [P] [US6] src/utils/storage.ts にマイグレーション関数を実装（バージョン管理）
-- [ ] T036 [US6] src/hooks/useLocalStorage.ts を作成（LocalStorage自動同期フック、debounce付き）
+- [X] T033 [P] [US6] src/utils/storage.ts を作成（saveToLocalStorage, loadFromLocalStorage関数）
+- [X] T034 [P] [US6] src/utils/storage.ts にエラーハンドリングを実装（QuotaExceededError, SecurityError対応）
+- [X] T035 [P] [US6] src/utils/storage.ts にマイグレーション関数を実装（バージョン管理）
+- [X] T036 [US6] src/hooks/useLocalStorage.ts を作成（LocalStorage自動同期フック、debounce付き）
 
 #### イベントループとの統合
 
-- [ ] T037 [US6] useEventLoop.ts を更新（useLocalStorageフックを統合）
-- [ ] T038 [US6] useEventLoop.ts に初回マウント時のデータ復元ロジックを追加
-- [ ] T039 [US6] useEventLoop.ts に状態変更時の自動保存ロジックを追加（debounce 300ms）
+- [X] T037 [US6] useEventLoop.ts を更新（useLocalStorageフックを統合）
+- [X] T038 [US6] useEventLoop.ts に初回マウント時のデータ復元ロジックを追加
+- [X] T039 [US6] useEventLoop.ts に状態変更時の自動保存ロジックを追加（debounce 300ms）
 
 #### エラーハンドリングUI
 
-- [ ] T040 [P] [US6] src/components/layout/ErrorBoundary.tsx を作成（LocalStorageエラー表示）
-- [ ] T041 [US6] App.tsx にErrorBoundaryを配置
+- [X] T040 [P] [US6] src/components/layout/ErrorBoundary.tsx を作成（LocalStorageエラー表示）
+- [X] T041 [US6] App.tsx にErrorBoundaryを配置
 
 #### 動作確認
 
-- [ ] T042 [US6] 動作確認：タスク追加 → ブラウザリロード → データ復元を確認
-- [ ] T043 [US6] 動作確認：プライベートモードでアプリを開き、エラーメッセージが表示されることを確認
+- [X] T042 [US6] 動作確認：タスク追加 → ブラウザリロード → データ復元を確認
+- [X] T043 [US6] 動作確認：プライベートモードでアプリを開き、エラーメッセージが表示されることを確認
 
 ---
 
@@ -155,22 +155,22 @@
 
 #### イベントループロジック拡張
 
-- [ ] T044 [US2] useEventLoop.ts の AUTO_DISPATCHアクションを更新（Microtask Queue優先ロジック追加）
-- [ ] T045 [US2] useEventLoop.ts の useEffect を更新（Microtask Queue連続処理ロジック、アニメーション遅延300ms）
+- [X] T044 [US2] useEventLoop.ts の AUTO_DISPATCHアクションを更新（Microtask Queue優先ロジック追加）
+- [X] T045 [US2] useEventLoop.ts の useEffect を更新（Microtask Queue連続処理ロジック、アニメーション遅延300ms）
 
 #### UIコンポーネント
 
-- [ ] T046 [P] [US2] src/components/areas/MicrotaskQueue.tsx を作成（Microtask Queueエリア、優先表示）
-- [ ] T047 [US2] MainLayout.tsx を更新（Microtask Queueエリアを追加）
-- [ ] T048 [US2] TaskForm.tsx を更新（投入先選択に「Microtask Queue」を追加）
+- [X] T046 [P] [US2] src/components/areas/MicrotaskQueue.tsx を作成（Microtask Queueエリア、優先表示）
+- [X] T047 [US2] MainLayout.tsx を更新（Microtask Queueエリアを追加）
+- [X] T048 [US2] TaskForm.tsx を更新（投入先選択に「Microtask Queue」を追加）
 
 #### スタイル調整
 
-- [ ] T049 [P] [US2] Microtask Queueエリアに視覚的な優先度表示を追加（アクセントカラー: #00ffff）
+- [X] T049 [P] [US2] Microtask Queueエリアに視覚的な優先度表示を追加（アクセントカラー: #00ffff）
 
 #### 動作確認
 
-- [ ] T050 [US2] 動作確認：Task Queue と Microtask Queue に両方タスクを追加 → Microtask Queueが優先処理されることを確認
+- [X] T050 [US2] 動作確認：Task Queue と Microtask Queue に両方タスクを追加 → Microtask Queueが優先処理されることを確認
 
 ---
 
@@ -187,19 +187,19 @@
 
 #### イベントループロジック拡張
 
-- [ ] T051 [US3] useEventLoop.ts に BLOCK_TASKアクションを追加（Call Stack → Web API移動）
-- [ ] T052 [US3] useEventLoop.ts に MOVE_TASKアクションを追加（Web API → 任意のキュー移動）
+- [X] T051 [US3] useEventLoop.ts に BLOCK_TASKアクションを追加（Call Stack → Web API移動）
+- [X] T052 [US3] useEventLoop.ts に MOVE_TASKアクションを追加（Web API → 任意のキュー移動）
 
 #### UIコンポーネント
 
-- [ ] T053 [P] [US3] src/components/areas/WebAPI.tsx を作成（Web APIエリア、タスクリスト表示）
-- [ ] T054 [US3] CallStack.tsx を更新（「ブロック → Web APIへ」ボタン追加）
-- [ ] T055 [US3] WebAPI.tsx にタスクごとの移動先選択UI追加（Task QueueまたはMicrotask Queueへ）
-- [ ] T056 [US3] MainLayout.tsx を更新（Web APIエリアを追加）
+- [X] T053 [P] [US3] src/components/areas/WebAPI.tsx を作成（Web APIエリア、タスクリスト表示）
+- [X] T054 [US3] CallStack.tsx を更新（「ブロック → Web APIへ」ボタン追加）
+- [X] T055 [US3] WebAPI.tsx にタスクごとの移動先選択UI追加（Task QueueまたはMicrotask Queueへ）
+- [X] T056 [US3] MainLayout.tsx を更新（Web APIエリアを追加）
 
 #### 動作確認
 
-- [ ] T057 [US3] 動作確認：Call Stackのタスクをブロック → Web APIに移動 → キューに戻す → 処理される
+- [X] T057 [US3] 動作確認：Call Stackのタスクをブロック → Web APIに移動 → キューに戻す → 処理される
 
 ---
 
