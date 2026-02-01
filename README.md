@@ -159,9 +159,10 @@ event-loop-for-human/
 
 ## Design Principles
 
-- **Monochrome Minimal**: Simple black and white palette to focus on tasks
-- **Visual Hierarchy**: Four areas clearly distinguished by layout
-- **Consistency**: Unified look and feel across all UI components
+- **Terminal Aesthetic**: Dark terminal theme with green text on black background, inspired by retro computing
+- **Functional Color Coding**: Each of the four areas has a distinct accent color (magenta, cyan, green, orange) for easy visual distinction
+- **Minimal & Focused**: Clean interface that eliminates visual noise to help you focus on tasks
+- **Monospace Typography**: Using developer-friendly fonts like Fira Code and JetBrains Mono
 - **Responsive**: Optimized from desktop to mobile
 
 ## License
