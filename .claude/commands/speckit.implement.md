@@ -133,3 +133,15 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Report final status with summary of completed work
 
 Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit.tasks` first to regenerate the task list.
+
+## 言語設定 / Language Settings
+
+**重要**: このコマンドの実行中の全ての出力、質問、返答は**日本語**で記述してください。
+
+- 進捗報告は日本語で出力
+- エラーメッセージは日本語で表示
+- チェックリストの状態確認は日本語で報告
+- ユーザーへの確認や質問は日本語で提示
+- 完了報告やサマリーは日本語で出力
+
+**例外**: コード、コメント、ログ出力、エラースタックトレースは英語のまま保持してください。

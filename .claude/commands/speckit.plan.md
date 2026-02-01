@@ -87,3 +87,16 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 - Use absolute paths
 - ERROR on gate failures or unresolved clarifications
+
+## 言語設定 / Language Settings
+
+**重要**: このコマンドで生成される全てのドキュメント、質問、返答は**日本語**で記述してください。
+
+- 実装計画 (plan.md) は日本語で作成
+- 技術的な決定事項の説明は日本語で記述
+- データモデル (data-model.md) の説明は日本語で作成
+- 研究結果 (research.md) は日本語でまとめる
+- ユーザーへの質問や報告は日本語で提示
+- ドキュメント内の見出しやラベルも日本語を使用
+
+**例外**: コード、API仕様、ファイル名、技術用語、OpenAPI/GraphQLスキーマは英語のまま保持してください。

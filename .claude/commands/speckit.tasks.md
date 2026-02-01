@@ -135,3 +135,15 @@ Every task MUST strictly follow this format:
   - Within each story: Tests (if requested) → Models → Services → Endpoints → Integration
   - Each phase should be a complete, independently testable increment
 - **Final Phase**: Polish & Cross-Cutting Concerns
+
+## 言語設定 / Language Settings
+
+**重要**: このコマンドで生成される全てのドキュメント、質問、返答は**日本語**で記述してください。
+
+- タスク一覧 (tasks.md) は日本語で作成
+- タスクの説明文は日本語で記述
+- 依存関係の説明は日本語で記述
+- 進捗報告や完了メッセージは日本語で出力
+- フェーズの説明やヘッダーも日本語を使用
+
+**例外**: タスクID (T001など)、ファイルパス、コード、技術用語は英語のまま保持してください。

@@ -179,3 +179,16 @@ Behavior rules:
 - If quota reached with unresolved high-impact categories remaining, explicitly flag them under Deferred with rationale.
 
 Context for prioritization: $ARGUMENTS
+
+## 言語設定 / Language Settings
+
+**重要**: このコマンドで生成される全ての質問、返答、ドキュメント更新は**日本語**で記述してください。
+
+- 明確化のための質問は日本語で提示
+- 選択肢の説明は日本語で記述
+- 推奨オプションの理由は日本語で説明
+- 仕様書の更新内容は日本語で記述
+- カバレッジサマリーは日本語で出力
+- 次のステップの提案は日本語で提示
+
+**例外**: 技術用語、コード、ファイル名は英語のまま保持してください。

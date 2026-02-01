@@ -80,3 +80,17 @@ If the user supplies partial updates (e.g., only one principle revision), still 
 If critical info missing (e.g., ratification date truly unknown), insert `TODO(<FIELD_NAME>): explanation` and include in the Sync Impact Report under deferred items.
 
 Do not create a new template; always operate on the existing `.specify/memory/constitution.md` file.
+
+## 言語設定 / Language Settings
+
+**重要**: このコマンドで生成される全てのドキュメント、質問、返答は**日本語**で記述してください。
+
+- 憲章 (constitution.md) は日本語で作成
+- 原則の説明は日本語で記述
+- ガバナンスセクションは日本語で記述
+- 同期影響レポートは日本語で作成
+- ユーザーへの質問や確認は日本語で提示
+- 最終サマリーは日本語で出力
+- コミットメッセージの提案も日本語で記述
+
+**例外**: ファイル名、プレースホルダートークン ([PROJECT_NAME]など)、バージョン番号、日付形式 (YYYY-MM-DD) は英語のまま保持してください。

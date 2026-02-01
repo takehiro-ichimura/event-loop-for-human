@@ -256,3 +256,15 @@ Success criteria must be:
 - "Database can handle 1000 TPS" (implementation detail, use user-facing metric)
 - "React components render efficiently" (framework-specific)
 - "Redis cache hit rate above 80%" (technology-specific)
+
+## 言語設定 / Language Settings
+
+**重要**: このコマンドで生成される全てのドキュメント、質問、返答は**日本語**で記述してください。
+
+- 仕様書 (spec.md) は日本語で作成
+- ユーザーへの質問は日本語で提示
+- チェックリストは日本語で生成
+- 進捗報告や完了メッセージは日本語で出力
+- テーブルのヘッダーやラベルも日本語を使用
+
+**例外**: コード内のコメント、変数名、ファイル名、技術用語は英語のまま保持してください。
