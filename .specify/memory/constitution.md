@@ -1,50 +1,171 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+同期影響レポート (Sync Impact Report)
+=====================================
+
+バージョン変更: 1.0.0 → 1.0.1
+修正日: 2026-02-02
+
+追加されたセクション: なし
+
+修正された原則:
+- 原則III: "シンプル&モノクロームの原則" → "ターミナル美学の原則"
+  - 実装実態に合わせて修正（白黒ではなくターミナル風カラースキーム）
+  - モノクローム（白黒グレー）→ ダークターミナルテーマ（黒背景+緑テキスト+アクセントカラー）
+  - 4つのエリアのアクセントカラー（マゼンタ、シアン、緑、オレンジ）を明記
+
+修正されたセクション:
+- Design Philosophy: ビジュアルアイデンティティとレトロコンピューティング美学を追記
+
+削除されたセクション: なし
+
+テンプレート更新状況:
+- ✅ plan-template.md: 確認済み - Constitution Check セクションとの整合性あり
+- ✅ spec-template.md: 確認済み - 要件定義との整合性あり
+- ✅ tasks-template.md: 確認済み - タスク分類との整合性あり
+- ✅ コマンドファイル: 確認済み - エージェント固有名称なし
+- ✅ CLAUDE.md: 更新必要 - ターミナル美学への言及を追加
+
+フォローアップTODO:
+- CLAUDE.mdの「モノクロームパレット」表記を「ターミナルカラースキーム」に修正
+
+バージョンアップの根拠:
+- PATCH (1.0.0 → 1.0.1): 既存実装との整合性を取るための文言修正
+- 後方互換性あり（原則の本質は変わらず、表現を実態に合わせただけ）
+-->
+
+# EventLoop4Human Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. シングルスレッド実行の原則 (Single-Threaded Execution)
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+人間の脳はマルチタスクが得意ではなく、実際にはタスク間を素早く切り替えているに過ぎません。この現実を受け入れ、JavaScriptのイベントループのように**一度に一つのタスクだけに集中する**設計を徹底します。
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**必須要件:**
+- Call Stack には常に0個または1個のタスクのみが存在する
+- 複数タスクの同時実行を示唆するUIやワークフローを作成しない
+- タスクの切り替えは明示的かつ意図的に行われる
+- 「マルチタスク」ではなく「タスク切り替え」という概念を一貫して使用する
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**根拠:**
+この原則は、人間の認知特性とJavaScriptの実行モデルの類似性に基づいています。シングルスレッド実行に集中することで、コンテキストスイッチングのコストを可視化し、集中力を高めます。
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. 優先度自動化の原則 (Automatic Priority Management)
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+JavaScriptのイベントループがMicrotask QueueをTask Queueより優先するように、関連タスクと独立タスクの優先度を**システムが自動的に管理**します。ユーザーが手動で優先度を調整する必要を最小限にします。
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+**必須要件:**
+- Microtask Queue（現在のタスクから派生した関連タスク）は常にTask Queue（独立した新規タスク）より優先される
+- この優先順位はシステムが自動的に適用し、ユーザーによる上書きを許可しない
+- 各タスクは適切なキュー（Microtask vs Task）に配置される必要がある
+- タスク実行順序のルールは明確にドキュメント化され、UIで可視化される
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**根拠:**
+手動の優先度管理は認知負荷を増やし、判断疲れを引き起こします。イベントループの機械的な優先度ルールを適用することで、タスク管理の意思決定コストを削減します。
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### III. ターミナル美学の原則 (Terminal Aesthetic)
+
+**タスクそのものに集中する**ため、UIはターミナル風のミニマルなデザインとし、不要な装飾やグラフィカルな要素を排除します。レトロコンピューティング時代のシンプルさと機能性を現代に再現します。
+
+**必須要件:**
+- **ダークターミナルテーマ**: 黒背景（#0a0a0a）に緑色のテキスト（#00ff00）を基調とする
+- **等幅フォント必須**: Fira Code、JetBrains Mono などのモノスペースフォントを使用
+- **機能的アクセントカラー**: 4つのエリアを視覚的に区別するため、各エリアに専用のアクセントカラーを割り当てる
+  - Call Stack: マゼンタ (#ff00ff)
+  - Microtask Queue: シアン (#00ffff)
+  - Task Queue: 緑 (#00ff00)
+  - Web API: オレンジ (#ffaa00)
+- **アニメーションは最小限**: 機能を伝えるために必要な場合のみ使用（150-400ms）
+- **装飾的要素の禁止**: グラデーション、影、アイコン、イラストなどの視覚的装飾を追加しない
+- **新機能追加時の制約**: UIの複雑さを増やさない（複雑さを正当化できない限り）
+
+**根拠:**
+ターミナルUIは数十年にわたり、プログラマーが長時間集中して作業するための最適なインターフェースとして証明されてきました。視覚的ノイズを排除し、機能的な色分けのみを採用することで、ユーザーがタスクの内容と実行に専念できるようにします。また、EventLoop4Humanのコンセプト（JavaScriptイベントループ）との技術的親和性も高まります。
+
+## Design Philosophy
+
+EventLoop4Humanは教育ツールでありながら実用的なタスク管理アプリです。
+
+**コンセプトの二重性:**
+- 開発者向け: JavaScriptイベントループの仕組みを体験的に学ぶ
+- 一般ユーザー向け: シングルタスク実行による集中力の向上
+
+**ビジュアルアイデンティティ:**
+- ターミナル風のダークテーマ（黒背景 + 緑テキスト）
+- 1980-90年代のレトロコンピューティング美学
+- コードエディタやターミナルで長時間作業する開発者に馴染みのあるUI
+
+**設計上の判断基準:**
+1. イベントループの概念との忠実性を優先する
+2. 実用性を損なわない範囲で教育的価値を最大化する
+3. JavaScriptの用語（Call Stack, Microtask, Task Queue, Web API）を保持し、技術的正確性を維持する
+4. ターミナルUIの伝統（シンプル、機能的、長時間使用に適した配色）を尊重する
+
+## Quality Standards
+
+### テスト要件
+
+プロジェクトの品質を維持するため、以下のテスト戦略を採用します:
+
+**必須テスト:**
+- ユニットテスト: Vitest + React Testing Library を使用
+- 型チェック: TypeScript 5.x の型システムを活用
+- リンター: ESLint による静的解析
+
+**テスト実行コマンド:**
+```bash
+npm test && npm run lint
+```
+
+**テストの対象:**
+- イベントループのロジック（タスクの優先順位、実行順序）
+- データ永続化（LocalStorage）の動作
+- UI コンポーネントの振る舞い
+- エラーハンドリング
+
+### パフォーマンス目標
+
+- **初回ロード**: 3秒以内（3G接続）
+- **タスク操作**: 100ms以内の応答性
+- **LocalStorage**: 1000タスクまで安定動作
+
+### レスポンシブ対応
+
+- モバイル（320px〜）からデスクトップ（1920px〜）まで対応
+- 4つのエリアはすべての画面サイズで視覚的に区別可能
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### 憲章の地位
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+この憲章はEventLoop4Humanプロジェクトにおけるすべての開発実践、設計判断、コードレビューに優先します。
+
+### 修正手順
+
+憲章の修正には以下のプロセスが必要です:
+
+1. **提案**: GitHub Issue で修正案を提出
+2. **議論**: コミュニティによる議論期間（最低7日間）
+3. **承認**: プロジェクトメンテナによる承認
+4. **マイグレーション計画**: 既存コードへの影響を評価し、移行計画を策定
+5. **バージョンアップ**: セマンティックバージョニングに従いバージョンを更新
+   - **MAJOR**: 後方互換性のない原則の削除や再定義
+   - **MINOR**: 新しい原則の追加や既存原則の大幅な拡張
+   - **PATCH**: 文言の明確化、タイポ修正、非本質的な改善
+
+### コンプライアンス
+
+**すべてのPull Requestは以下を検証する必要があります:**
+- 3つの核心原則（シングルスレッド実行、優先度自動化、シンプル&モノクローム）への準拠
+- 新しい複雑さの正当化（原則IIIに基づく）
+- テスト要件の充足
+
+**定期的なレビュー:**
+- 四半期ごとに憲章の有効性を検証
+- プロジェクトの成長に伴い原則の追加や修正を検討
+
+### ランタイムガイダンス
+
+日々の開発においては `CLAUDE.md` を参照してください。このファイルは憲章の原則を実践的な開発ガイドラインに翻訳したものです。
+
+**Version**: 1.0.1 | **Ratified**: 2026-02-02 | **Last Amended**: 2026-02-02
