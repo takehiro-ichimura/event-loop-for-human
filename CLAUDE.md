@@ -14,6 +14,8 @@ Auto-generated from all feature plans. Last updated: 2026-02-02
 すべてのコード変更は上記3原則に準拠する必要があります。
 
 ## Active Technologies
+- TypeScript 5.6.x, React 18.3.x + React, React DOM（既存）、追加ライブラリ不要 (002-add-task-timer)
+- LocalStorage（既存の永続化インフラを拡張） (002-add-task-timer)
 
 - TypeScript 5.x, React 18.x (001-eventloop-task-manager)
 
@@ -49,6 +51,7 @@ TypeScript 5.x, React 18.x: Follow standard conventions
 - イベントループ用語（Call Stack, Microtask, Task, Web API）を保持
 
 ## Recent Changes
+- 002-add-task-timer: Added TypeScript 5.6.x, React 18.3.x + React, React DOM（既存）、追加ライブラリ不要
 
 - 001-eventloop-task-manager: Added TypeScript 5.x, React 18.x
 - 2026-02-02: プロジェクト憲章 v1.0.1 を確立（ターミナル美学の原則を実装実態に合わせて修正）
