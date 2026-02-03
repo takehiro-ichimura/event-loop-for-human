@@ -19,11 +19,11 @@
 
 **Purpose**: プロジェクト初期化と基本構造の確認
 
-- [ ] T001 開発環境の確認（`npm install && npm run dev && npm test` が成功すること）
-- [ ] T002 [P] 型定義ファイルを作成 `src/types/timer.types.ts`
-- [ ] T003 [P] ユーティリティファイルを作成 `src/utils/timer.ts`
-- [ ] T004 [P] カスタムフックファイルを作成 `src/hooks/useTaskTimer.ts`
-- [ ] T005 [P] タイマーコンポーネントファイルを作成 `src/components/task/TaskTimer.tsx`
+- [X] T001 開発環境の確認（`npm install && npm run dev && npm test` が成功すること）
+- [X] T002 [P] 型定義ファイルを作成 `src/types/timer.types.ts`
+- [X] T003 [P] ユーティリティファイルを作成 `src/utils/timer.ts`
+- [X] T004 [P] カスタムフックファイルを作成 `src/hooks/useTaskTimer.ts`
+- [X] T005 [P] タイマーコンポーネントファイルを作成 `src/components/task/TaskTimer.tsx`
 
 ---
 
@@ -33,13 +33,13 @@
 
 **⚠️ CRITICAL**: このフェーズが完了するまで、ユーザーストーリーの作業は開始できない
 
-- [ ] T006 [P] `TimerState` インターフェースを実装 `src/types/timer.types.ts`
-- [ ] T007 [P] `TimerStorageSchema` インターフェースを実装 `src/types/timer.types.ts`
-- [ ] T008 [P] `UseTaskTimerReturn` インターフェースを実装 `src/types/timer.types.ts`
-- [ ] T009 [P] `TaskTimerProps` インターフェースを実装 `src/types/timer.types.ts`
-- [ ] T010 [P] `TimerValidationResult` インターフェースを実装 `src/types/timer.types.ts`
-- [ ] T011 [P] ストレージ定数 `TIMER_STORAGE_KEY`, `TIMER_STORAGE_VERSION` を定義 `src/types/timer.types.ts`
-- [ ] T012 型定義を `src/types/index.ts` からエクスポート
+- [X] T006 [P] `TimerState` インターフェースを実装 `src/types/timer.types.ts`
+- [X] T007 [P] `TimerStorageSchema` インターフェースを実装 `src/types/timer.types.ts`
+- [X] T008 [P] `UseTaskTimerReturn` インターフェースを実装 `src/types/timer.types.ts`
+- [X] T009 [P] `TaskTimerProps` インターフェースを実装 `src/types/timer.types.ts`
+- [X] T010 [P] `TimerValidationResult` インターフェースを実装 `src/types/timer.types.ts`
+- [X] T011 [P] ストレージ定数 `TIMER_STORAGE_KEY`, `TIMER_STORAGE_VERSION` を定義 `src/types/timer.types.ts`
+- [X] T012 型定義を `src/types/index.ts` からエクスポート
 
 **Checkpoint**: 基盤完了 - ユーザーストーリーの実装を開始可能
 
@@ -53,16 +53,16 @@
 
 ### Implementation for User Story 1
 
-- [ ] T013 [P] [US1] `formatElapsedTime(ms: number): string` を実装 `src/utils/timer.ts`
-- [ ] T014 [P] [US1] `formatTimestamp(timestamp: number): string` を実装 `src/utils/timer.ts`
-- [ ] T015 [P] [US1] `calculateElapsedTime(state: TimerState, currentTime?: number): number` を実装 `src/utils/timer.ts`
-- [ ] T016 [US1] `startTimer(taskId: string): TimerState` を実装 `src/utils/timer.ts`
-- [ ] T017 [US1] `useTaskTimer` フックの基本構造を実装（タイマー開始、経過時間計算） `src/hooks/useTaskTimer.ts`
-- [ ] T018 [US1] `setInterval` による1秒間隔の更新ロジックを実装 `src/hooks/useTaskTimer.ts`
-- [ ] T019 [US1] `TaskTimer` コンポーネントの基本表示を実装（経過時間、開始時刻） `src/components/task/TaskTimer.tsx`
-- [ ] T020 [US1] ターミナル美学に準拠したスタイルを適用（マゼンタ、等幅フォント） `src/components/task/TaskTimer.tsx`
-- [ ] T021 [US1] `CallStack` コンポーネントに `TaskTimer` を統合 `src/components/areas/CallStack.tsx`
-- [ ] T022 [US1] タスク完了/ブロック時のタイマーリセット処理を実装 `src/hooks/useTaskTimer.ts`
+- [X] T013 [P] [US1] `formatElapsedTime(ms: number): string` を実装 `src/utils/timer.ts`
+- [X] T014 [P] [US1] `formatTimestamp(timestamp: number): string` を実装 `src/utils/timer.ts`
+- [X] T015 [P] [US1] `calculateElapsedTime(state: TimerState, currentTime?: number): number` を実装 `src/utils/timer.ts`
+- [X] T016 [US1] `startTimer(taskId: string): TimerState` を実装 `src/utils/timer.ts`
+- [X] T017 [US1] `useTaskTimer` フックの基本構造を実装（タイマー開始、経過時間計算） `src/hooks/useTaskTimer.ts`
+- [X] T018 [US1] `setInterval` による1秒間隔の更新ロジックを実装 `src/hooks/useTaskTimer.ts`
+- [X] T019 [US1] `TaskTimer` コンポーネントの基本表示を実装（経過時間、開始時刻） `src/components/task/TaskTimer.tsx`
+- [X] T020 [US1] ターミナル美学に準拠したスタイルを適用（マゼンタ、等幅フォント） `src/components/task/TaskTimer.tsx`
+- [X] T021 [US1] `CallStack` コンポーネントに `TaskTimer` を統合 `src/components/areas/CallStack.tsx`
+- [X] T022 [US1] タスク完了/ブロック時のタイマーリセット処理を実装 `src/hooks/useTaskTimer.ts`
 
 **Checkpoint**: User Story 1 完了 - タイマーの基本表示が動作し、独立してテスト可能
 
@@ -76,13 +76,13 @@
 
 ### Implementation for User Story 2
 
-- [ ] T023 [P] [US2] `pauseTimer(state: TimerState): TimerState` を実装 `src/utils/timer.ts`
-- [ ] T024 [P] [US2] `resumeTimer(state: TimerState): TimerState` を実装 `src/utils/timer.ts`
-- [ ] T025 [US2] `useTaskTimer` に pause/resume アクションを追加 `src/hooks/useTaskTimer.ts`
-- [ ] T026 [US2] 一時停止中の経過時間計算ロジックを更新 `src/hooks/useTaskTimer.ts`
-- [ ] T027 [US2] 一時停止/再開ボタンを `TaskTimer` に追加 `src/components/task/TaskTimer.tsx`
-- [ ] T028 [US2] ボタンスタイルを既存の完了/ブロックボタンと統一 `src/components/task/TaskTimer.tsx`
-- [ ] T029 [US2] 再開時刻の表示を実装（`lastResumeTime` がある場合のみ） `src/components/task/TaskTimer.tsx`
+- [X] T023 [P] [US2] `pauseTimer(state: TimerState): TimerState` を実装 `src/utils/timer.ts`
+- [X] T024 [P] [US2] `resumeTimer(state: TimerState): TimerState` を実装 `src/utils/timer.ts`
+- [X] T025 [US2] `useTaskTimer` に pause/resume アクションを追加 `src/hooks/useTaskTimer.ts`
+- [X] T026 [US2] 一時停止中の経過時間計算ロジックを更新 `src/hooks/useTaskTimer.ts`
+- [X] T027 [US2] 一時停止/再開ボタンを `TaskTimer` に追加 `src/components/task/TaskTimer.tsx`
+- [X] T028 [US2] ボタンスタイルを既存の完了/ブロックボタンと統一 `src/components/task/TaskTimer.tsx`
+- [X] T029 [US2] 再開時刻の表示を実装（`lastResumeTime` がある場合のみ） `src/components/task/TaskTimer.tsx`
 
 **Checkpoint**: User Story 2 完了 - 一時停止/再開が動作し、独立してテスト可能
 
@@ -96,9 +96,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T030 [P] [US3] 動作中のスタイル定義（マゼンタ #ff00ff） `src/components/task/TaskTimer.tsx`
-- [ ] T031 [P] [US3] 一時停止中のスタイル定義（半透明マゼンタ #ff00ff88） `src/components/task/TaskTimer.tsx`
-- [ ] T032 [US3] `isPaused` 状態に基づいてスタイルを切り替えるロジックを実装 `src/components/task/TaskTimer.tsx`
+- [X] T030 [P] [US3] 動作中のスタイル定義（マゼンタ #ff00ff） `src/components/task/TaskTimer.tsx`
+- [X] T031 [P] [US3] 一時停止中のスタイル定義（半透明マゼンタ #ff00ff88） `src/components/task/TaskTimer.tsx`
+- [X] T032 [US3] `isPaused` 状態に基づいてスタイルを切り替えるロジックを実装 `src/components/task/TaskTimer.tsx`
 - [ ] T033 [US3] 一時停止状態の視覚的フィードバックをテスト（手動確認）
 
 **Checkpoint**: User Story 3 完了 - 視覚的フィードバックが動作し、独立してテスト可能
@@ -113,13 +113,13 @@
 
 ### Implementation for User Story 4
 
-- [ ] T034 [P] [US4] `validateTimerState(state: TimerState): TimerValidationResult` を実装 `src/utils/timer.ts`
-- [ ] T035 [P] [US4] LocalStorage保存ユーティリティ `saveTimerState(state: TimerState | null)` を実装 `src/utils/timer.ts`
-- [ ] T036 [P] [US4] LocalStorage読込ユーティリティ `loadTimerState(): TimerState | null` を実装 `src/utils/timer.ts`
-- [ ] T037 [US4] `useTaskTimer` でLocalStorageからの状態復元を実装 `src/hooks/useTaskTimer.ts`
-- [ ] T038 [US4] `useTaskTimer` で状態変更時のLocalStorage保存を実装 `src/hooks/useTaskTimer.ts`
-- [ ] T039 [US4] タスクID変更時の古い状態クリアロジックを実装 `src/hooks/useTaskTimer.ts`
-- [ ] T040 [US4] リロード時の経過時間再計算（リロード中の時間も考慮）を実装 `src/hooks/useTaskTimer.ts`
+- [X] T034 [P] [US4] `validateTimerState(state: TimerState): TimerValidationResult` を実装 `src/utils/timer.ts`
+- [X] T035 [P] [US4] LocalStorage保存ユーティリティ `saveTimerState(state: TimerState | null)` を実装 `src/utils/timer.ts`
+- [X] T036 [P] [US4] LocalStorage読込ユーティリティ `loadTimerState(): TimerState | null` を実装 `src/utils/timer.ts`
+- [X] T037 [US4] `useTaskTimer` でLocalStorageからの状態復元を実装 `src/hooks/useTaskTimer.ts`
+- [X] T038 [US4] `useTaskTimer` で状態変更時のLocalStorage保存を実装 `src/hooks/useTaskTimer.ts`
+- [X] T039 [US4] タスクID変更時の古い状態クリアロジックを実装 `src/hooks/useTaskTimer.ts`
+- [X] T040 [US4] リロード時の経過時間再計算（リロード中の時間も考慮）を実装 `src/hooks/useTaskTimer.ts`
 - [ ] T041 [US4] 永続化の手動テスト（ページリロード、ブラウザ再起動）
 
 **Checkpoint**: User Story 4 完了 - 永続化が動作し、独立してテスト可能
@@ -132,13 +132,13 @@
 
 ### テスト（オプション）
 
-- [ ] T042 [P] ユーティリティ関数のユニットテストを実装 `tests/utils/timer.test.ts`
+- [X] T042 [P] ユーティリティ関数のユニットテストを実装 `tests/utils/timer.test.ts`
 - [ ] T043 [P] `useTaskTimer` フックのテストを実装 `tests/hooks/useTaskTimer.test.ts`
 - [ ] T044 [P] `TaskTimer` コンポーネントのテストを実装 `tests/components/TaskTimer.test.tsx`
 
 ### 品質保証
 
-- [ ] T045 `npm test` ですべてのテストが通ることを確認
+- [X] T045 `npm test` ですべてのテストが通ることを確認
 - [ ] T046 `npm run lint` でリントエラーがないことを確認
 - [ ] T047 quickstart.md のシナリオを手動で検証
 

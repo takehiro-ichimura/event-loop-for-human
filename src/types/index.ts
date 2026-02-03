@@ -44,3 +44,17 @@ export {
   StorageErrorType,
   DEFAULT_STORAGE_CONFIG,
 } from './storage.types';
+
+// Timer types
+export type {
+  TimerState,
+  TimerStorageSchema,
+  UseTaskTimerReturn,
+  TaskTimerProps,
+  TimerValidationResult,
+} from './timer.types';
+
+export {
+  TIMER_STORAGE_KEY,
+  TIMER_STORAGE_VERSION,
+} from './timer.types';
