@@ -8,6 +8,7 @@
 import React from 'react';
 import type { Task } from '@/types';
 import { TaskCard } from '@/components/task/TaskCard';
+import { TaskTimer } from '@/components/task/TaskTimer';
 import { theme } from '@/styles/theme';
 
 export interface CallStackProps {
@@ -89,14 +90,17 @@ export const CallStack: React.FC<CallStackProps> = ({
       </div>
       <div style={styles.content}>
         {task ? (
-          <TaskCard
-            task={task}
-            showCompleteButton
-            showBlockButton
-            onComplete={onComplete}
-            onBlock={onBlock}
-            onClick={onTaskClick ? () => onTaskClick(task) : undefined}
-          />
+          <>
+            <TaskTimer taskId={task.id} />
+            <TaskCard
+              task={task}
+              showCompleteButton
+              showBlockButton
+              onComplete={onComplete}
+              onBlock={onBlock}
+              onClick={onTaskClick ? () => onTaskClick(task) : undefined}
+            />
+          </>
         ) : (
           <div>
             <div style={styles.empty}>// Empty</div>
