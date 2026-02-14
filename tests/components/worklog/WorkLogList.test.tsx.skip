@@ -1,0 +1,120 @@
+/**
+ * WorkLogList Component Tests
+ */
+
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { WorkLogList } from '@/components/worklog/WorkLogList';
+import type { LogEntry } from '@/types';
+
+describe('WorkLogList', () => {
+  const createMockEntry = (id: string, taskName: string, operation: LogEntry['operation']): LogEntry => ({
+    id,
+    taskId: `task-${id}`,
+    taskName,
+    operation,
+    timestamp: new Date('2026-02-15T10:00:00Z').toISOString(),
+    fromArea: operation === 'moved' ? 'taskQueue' : null,
+    toArea: operation === 'moved' ? 'callStack' : operation === 'created' ? 'taskQueue' : null,
+    elapsedTime: operation === 'completed' ? 1800000 : null,
+  });
+
+  it('should display log entries', () => {
+    const entries = [
+      createMockEntry('1', 'Task 1', 'created'),
+      createMockEntry('2', 'Task 2', 'completed'),
+    ];
+
+    render(<WorkLogList entries={entries} />);
+
+    expect(screen.getByText('Task 1')).toBeInTheDocument();
+    expect(screen.getByText('Task 2')).toBeInTheDocument();
+  });
+
+  it('should display "もっと見る" button when entries exceed initial page size', () => {
+    const entries = Array.from({ length: 60 }, (_, i) =>
+      createMockEntry(`${i}`, `Task ${i}`, 'created')
+    );
+
+    render(<WorkLogList entries={entries} />);
+
+    // Initially shows 50 entries
+    expect(screen.getByText('Task 0')).toBeInTheDocument();
+    expect(screen.getByText('Task 49')).toBeInTheDocument();
+    expect(screen.queryByText('Task 50')).not.toBeInTheDocument();
+
+    // "もっと見る" button should be visible
+    expect(screen.getByText(/もっと見る/)).toBeInTheDocument();
+  });
+
+  it('should load more entries when "もっと見る" is clicked', () => {
+    const entries = Array.from({ length: 60 }, (_, i) =>
+      createMockEntry(`${i}`, `Task ${i}`, 'created')
+    );
+
+    render(<WorkLogList entries={entries} />);
+
+    const loadMoreButton = screen.getByText(/もっと見る/);
+    fireEvent.click(loadMoreButton);
+
+    // After clicking, should show first 50 + next 10 = 60 entries
+    expect(screen.getByText('Task 0')).toBeInTheDocument();
+    expect(screen.getByText('Task 59')).toBeInTheDocument();
+
+    // "もっと見る" button should disappear (no more entries)
+    expect(screen.queryByText(/もっと見る/)).not.toBeInTheDocument();
+  });
+
+  it('should display empty message when no entries', () => {
+    render(<WorkLogList entries={[]} />);
+
+    expect(screen.getByText('ログがありません')).toBeInTheDocument();
+  });
+
+  it('should display operation types with correct colors', () => {
+    const entries = [
+      createMockEntry('1', 'Created Task', 'created'),
+      createMockEntry('2', 'Moved Task', 'moved'),
+      createMockEntry('3', 'Completed Task', 'completed'),
+      createMockEntry('4', 'Blocked Task', 'blocked'),
+    ];
+
+    const { container } = render(<WorkLogList entries={entries} />);
+
+    // Check that operation labels are rendered
+    expect(screen.getByText('タスク作成')).toBeInTheDocument();
+    expect(screen.getByText('タスク移動')).toBeInTheDocument();
+    expect(screen.getByText('タスク完了')).toBeInTheDocument();
+    expect(screen.getByText('タスクブロック')).toBeInTheDocument();
+  });
+
+  it('should display elapsed time for completed tasks', () => {
+    const entries = [
+      createMockEntry('1', 'Completed Task', 'completed'),
+    ];
+
+    render(<WorkLogList entries={entries} />);
+
+    // 1800000ms = 30 minutes = 00:30:00
+    expect(screen.getByText(/30:00/)).toBeInTheDocument();
+  });
+
+  it('should display from → to areas for moved tasks', () => {
+    const movedEntry: LogEntry = {
+      id: '1',
+      taskId: 'task-1',
+      taskName: 'Moved Task',
+      operation: 'moved',
+      timestamp: new Date('2026-02-15T10:00:00Z').toISOString(),
+      fromArea: 'taskQueue',
+      toArea: 'callStack',
+      elapsedTime: null,
+    };
+
+    render(<WorkLogList entries={[movedEntry]} />);
+
+    expect(screen.getByText(/taskQueue/)).toBeInTheDocument();
+    expect(screen.getByText(/callStack/)).toBeInTheDocument();
+    expect(screen.getByText(/→/)).toBeInTheDocument();
+  });
+});
