@@ -58,3 +58,21 @@ export {
   TIMER_STORAGE_KEY,
   TIMER_STORAGE_VERSION,
 } from './timer.types';
+
+// Work Log types
+export type {
+  LogEntry,
+  LogOperation,
+  WorkLogStorageSchema,
+  WorkSummary,
+  DailyStats,
+  DateFilter,
+  RecordLogParams,
+} from './worklog.types';
+
+export {
+  WORKLOG_STORAGE_KEY,
+  WORKLOG_STORAGE_VERSION,
+  WORKLOG_MAX_ENTRIES,
+  WORKLOG_PAGE_SIZE,
+} from './worklog.types';
