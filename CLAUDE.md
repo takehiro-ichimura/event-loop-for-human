@@ -16,6 +16,8 @@ Auto-generated from all feature plans. Last updated: 2026-02-02
 ## Active Technologies
 - TypeScript 5.6.x, React 18.3.x + React, React DOM（既存）、追加ライブラリ不要 (002-add-task-timer)
 - LocalStorage（既存の永続化インフラを拡張） (002-add-task-timer)
+- TypeScript 5.6.x + React 18.3.x, React DOM 18.3.x, @dnd-kit/core 6.x, @dnd-kit/sortable 8.x (003-add-work-log)
+- LocalStorage（既存インフラを拡張、ログ専用キー `eventloop4human:logs` を新設） (003-add-work-log)
 
 - TypeScript 5.x, React 18.x (001-eventloop-task-manager)
 
@@ -51,10 +53,10 @@ TypeScript 5.x, React 18.x: Follow standard conventions
 - イベントループ用語（Call Stack, Microtask, Task, Web API）を保持
 
 ## Recent Changes
+- 003-add-work-log: Added TypeScript 5.6.x + React 18.3.x, React DOM 18.3.x, @dnd-kit/core 6.x, @dnd-kit/sortable 8.x
 - 002-add-task-timer: Added TypeScript 5.6.x, React 18.3.x + React, React DOM（既存）、追加ライブラリ不要
 
 - 001-eventloop-task-manager: Added TypeScript 5.x, React 18.x
-- 2026-02-02: プロジェクト憲章 v1.0.1 を確立（ターミナル美学の原則を実装実態に合わせて修正）
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
