@@ -1,16 +1,16 @@
 /**
  * Timer Utilities
  *
- * タスクタイマー機能のユーティリティ関数を提供します。
+ * Provides utility functions for the task timer feature.
  */
 
 import type { TimerState, TimerStorageSchema, TimerValidationResult } from '@/types';
 import { TIMER_STORAGE_KEY, TIMER_STORAGE_VERSION } from '@/types';
 
 /**
- * 経過時間を表示用フォーマットに変換
- * @param ms 経過時間（ms）
- * @returns フォーマット済み文字列（MM:SS または HH:MM:SS）
+ * Format elapsed time for display
+ * @param ms Elapsed time in milliseconds
+ * @returns Formatted string (MM:SS or HH:MM:SS)
  */
 export function formatElapsedTime(ms: number): string {
   const totalSeconds = Math.floor(ms / 1000);
@@ -25,9 +25,9 @@ export function formatElapsedTime(ms: number): string {
 }
 
 /**
- * タイムスタンプを表示用フォーマットに変換
+ * Format a timestamp for display
  * @param timestamp Unix timestamp (ms)
- * @returns フォーマット済み文字列（MMM D HH:MM:SS）
+ * @returns Formatted string (MMM D HH:MM:SS)
  */
 export function formatTimestamp(timestamp: number): string {
   const date = new Date(timestamp);
@@ -56,28 +56,28 @@ export function formatTimestamp(timestamp: number): string {
 }
 
 /**
- * 経過時間を計算（一時停止時間を除く）
- * @param state タイマー状態
- * @param currentTime 現在時刻（テスト用に注入可能）
- * @returns 経過時間（ms）
+ * Calculate elapsed time (excluding paused duration)
+ * @param state Timer state
+ * @param currentTime Current time (injectable for testing)
+ * @returns Elapsed time in milliseconds
  */
 export function calculateElapsedTime(
   state: TimerState,
   currentTime: number = Date.now()
 ): number {
   if (state.isPaused && state.pauseStartTime !== null) {
-    // 一時停止中は、一時停止開始時点までの時間を返す
+    // While paused, return the time up to when the pause started
     return state.pauseStartTime - state.startTime - state.totalPausedTime;
   }
 
-  // 動作中は、現在時刻から開始時刻と累積一時停止時間を引く
+  // While running, subtract start time and accumulated pause time from current time
   return currentTime - state.startTime - state.totalPausedTime;
 }
 
 /**
- * タイマーを開始
- * @param taskId 対象タスクのID
- * @returns 新しいTimerState
+ * Start a timer
+ * @param taskId ID of the target task
+ * @returns New TimerState
  */
 export function startTimer(taskId: string): TimerState {
   return {
@@ -91,12 +91,12 @@ export function startTimer(taskId: string): TimerState {
 }
 
 /**
- * タイマーを一時停止
- * @param state 現在のタイマー状態
- * @returns 更新されたTimerState
+ * Pause the timer
+ * @param state Current timer state
+ * @returns Updated TimerState
  */
 export function pauseTimer(state: TimerState): TimerState {
-  if (state.isPaused) return state; // 既に一時停止中
+  if (state.isPaused) return state; // Already paused
 
   return {
     ...state,
@@ -106,12 +106,12 @@ export function pauseTimer(state: TimerState): TimerState {
 }
 
 /**
- * タイマーを再開
- * @param state 現在のタイマー状態
- * @returns 更新されたTimerState
+ * Resume the timer
+ * @param state Current timer state
+ * @returns Updated TimerState
  */
 export function resumeTimer(state: TimerState): TimerState {
-  if (!state.isPaused || state.pauseStartTime === null) return state; // 既に動作中
+  if (!state.isPaused || state.pauseStartTime === null) return state; // Already running
 
   const now = Date.now();
   const pauseDuration = now - state.pauseStartTime;
@@ -126,34 +126,34 @@ export function resumeTimer(state: TimerState): TimerState {
 }
 
 /**
- * TimerStateのバリデーション
- * @param state 検証するタイマー状態
- * @returns バリデーション結果
+ * Validate a TimerState
+ * @param state Timer state to validate
+ * @returns Validation result
  */
 export function validateTimerState(state: TimerState): TimerValidationResult {
   const errors: string[] = [];
 
-  // taskIdは空でない文字列
+  // taskId must be a non-empty string
   if (!state.taskId || state.taskId.trim() === '') {
     errors.push('taskId is required');
   }
 
-  // startTimeは正の数値
+  // startTime must be a positive number
   if (state.startTime <= 0) {
     errors.push('startTime must be a positive number');
   }
 
-  // totalPausedTimeは非負
+  // totalPausedTime must be non-negative
   if (state.totalPausedTime < 0) {
     errors.push('totalPausedTime must be non-negative');
   }
 
-  // isPausedがtrueの場合、pauseStartTimeは必須
+  // pauseStartTime is required when isPaused is true
   if (state.isPaused && state.pauseStartTime === null) {
     errors.push('pauseStartTime is required when isPaused is true');
   }
 
-  // isPausedがfalseの場合、pauseStartTimeはnull
+  // pauseStartTime must be null when isPaused is false
   if (!state.isPaused && state.pauseStartTime !== null) {
     errors.push('pauseStartTime must be null when isPaused is false');
   }
@@ -165,8 +165,8 @@ export function validateTimerState(state: TimerState): TimerValidationResult {
 }
 
 /**
- * タイマー状態をLocalStorageに保存
- * @param state 保存するタイマー状態（nullの場合はクリア）
+ * Save timer state to LocalStorage
+ * @param state Timer state to save (null to clear)
  */
 export function saveTimerState(state: TimerState | null): void {
   try {
@@ -182,8 +182,8 @@ export function saveTimerState(state: TimerState | null): void {
 }
 
 /**
- * LocalStorageからタイマー状態を読み込み
- * @returns 読み込んだタイマー状態（存在しないまたは無効な場合はnull）
+ * Load timer state from LocalStorage
+ * @returns Loaded timer state (null if not found or invalid)
  */
 export function loadTimerState(): TimerState | null {
   try {
@@ -192,17 +192,17 @@ export function loadTimerState(): TimerState | null {
 
     const data: TimerStorageSchema = JSON.parse(stored);
 
-    // バージョンチェック
+    // Version check
     if (data.version !== TIMER_STORAGE_VERSION) {
       console.warn('Timer storage version mismatch, clearing state');
       localStorage.removeItem(TIMER_STORAGE_KEY);
       return null;
     }
 
-    // 状態がない場合
+    // No state present
     if (!data.timerState) return null;
 
-    // バリデーション
+    // Validation
     const validation = validateTimerState(data.timerState);
     if (!validation.valid) {
       console.warn('Invalid timer state in storage:', validation.errors);
@@ -218,7 +218,7 @@ export function loadTimerState(): TimerState | null {
 }
 
 /**
- * LocalStorageからタイマー状態をクリア
+ * Clear timer state from LocalStorage
  */
 export function clearTimerState(): void {
   try {

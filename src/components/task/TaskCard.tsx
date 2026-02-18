@@ -1,8 +1,8 @@
 /**
  * TaskCard Component
  *
- * タスクを表示するカードコンポーネント。
- * 完了ボタン、属性表示、編集機能を提供します。
+ * Card component for displaying a task.
+ * Provides complete button, attribute display, and edit functionality.
  */
 
 import React from 'react';

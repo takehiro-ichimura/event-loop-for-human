@@ -1,8 +1,8 @@
 /**
  * Storage Utilities
  *
- * LocalStorage操作のためのユーティリティ関数を提供します。
- * エラーハンドリング、マイグレーション、フォールバック機能を含みます。
+ * Provides utility functions for LocalStorage operations.
+ * Includes error handling, migration, and fallback functionality.
  */
 
 import type {
@@ -19,7 +19,7 @@ import {
 } from '@/types';
 
 /**
- * デフォルトのEventLoopStateを作成
+ * Creates a default EventLoopState
  */
 function createDefaultState(): EventLoopState {
   return {
@@ -31,7 +31,7 @@ function createDefaultState(): EventLoopState {
 }
 
 /**
- * デフォルトのStorageSchemaを作成
+ * Creates a default StorageSchema
  */
 function createDefaultStorage(): StorageSchema {
   return {
@@ -42,7 +42,7 @@ function createDefaultStorage(): StorageSchema {
 }
 
 /**
- * LocalStorageが利用可能かチェック
+ * Checks if LocalStorage is available
  */
 function isLocalStorageAvailable(): boolean {
   try {
@@ -56,7 +56,7 @@ function isLocalStorageAvailable(): boolean {
 }
 
 /**
- * SessionStorageにフォールバック可能かチェック
+ * Checks if SessionStorage is available as a fallback
  */
 function isSessionStorageAvailable(): boolean {
   try {
@@ -70,24 +70,24 @@ function isSessionStorageAvailable(): boolean {
 }
 
 /**
- * ストレージエラーを分類
+ * Classifies a storage error
  */
 function classifyStorageError(error: unknown): StorageError {
   if (error instanceof DOMException) {
     if (error.name === 'QuotaExceededError' || error.code === 22) {
       return {
         type: StorageErrorType.QUOTA_EXCEEDED,
-        message: 'LocalStorageの容量が不足しています',
+        message: 'LocalStorage quota exceeded',
         originalError: error,
-        suggestion: '古いタスクを削除するか、ブラウザの設定で容量を増やしてください',
+        suggestion: 'Delete old tasks or increase browser storage capacity',
       };
     }
     if (error.name === 'SecurityError') {
       return {
         type: StorageErrorType.SECURITY_ERROR,
-        message: 'プライベートモードではLocalStorageが使用できません',
+        message: 'LocalStorage is not available in private browsing mode',
         originalError: error,
-        suggestion: '通常モードでブラウザを開くか、一時的なセッションとして使用してください',
+        suggestion: 'Open the browser in normal mode or use as a temporary session',
       };
     }
   }
@@ -95,21 +95,21 @@ function classifyStorageError(error: unknown): StorageError {
   if (error instanceof SyntaxError) {
     return {
       type: StorageErrorType.PARSE_ERROR,
-      message: '保存データの形式が不正です',
+      message: 'Saved data format is invalid',
       originalError: error,
-      suggestion: 'データをリセットして再度お試しください',
+      suggestion: 'Reset data and try again',
     };
   }
 
   return {
     type: StorageErrorType.UNKNOWN_ERROR,
-    message: error instanceof Error ? error.message : '不明なエラーが発生しました',
+    message: error instanceof Error ? error.message : 'An unknown error occurred',
     originalError: error,
   };
 }
 
 /**
- * バージョン比較（セマンティックバージョニング）
+ * Compares semantic versions (returns true if a < b)
  */
 function semverLt(a: string, b: string): boolean {
   const partsA = a.split('.').map(Number);
@@ -126,10 +126,10 @@ function semverLt(a: string, b: string): boolean {
 }
 
 /**
- * ストレージデータのマイグレーション
+ * Migrates storage data to the current schema
  */
 export function migrateStorage(data: unknown): StorageSchema {
-  // データがない場合はデフォルト値を返す
+  // Return default if data is missing or invalid
   if (!data || typeof data !== 'object') {
     console.warn('Storage data is invalid, returning default');
     return createDefaultStorage();
@@ -138,20 +138,20 @@ export function migrateStorage(data: unknown): StorageSchema {
   const typedData = data as Record<string, unknown>;
   const version = typeof typedData.version === 'string' ? typedData.version : '0.0.0';
 
-  // バージョン1.0.0未満の場合、デフォルト値で初期化
+  // Initialize with defaults if version is below 1.0.0
   if (semverLt(version, '1.0.0')) {
     console.warn('Legacy storage detected, resetting to default');
     return createDefaultStorage();
   }
 
-  // 将来的なバージョンアップ時の変換処理をここに追加
+  // Add future version migration logic here
   // if (semverLt(version, '2.0.0')) { ... }
 
   return data as StorageSchema;
 }
 
 /**
- * LocalStorageにデータを保存
+ * Saves data to LocalStorage
  */
 export function saveToLocalStorage(state: EventLoopState): StorageResult<void> {
   try {
@@ -161,7 +161,7 @@ export function saveToLocalStorage(state: EventLoopState): StorageResult<void> {
     if (!storage) {
       return {
         success: false,
-        error: 'ストレージが利用できません',
+        error: 'Storage is not available',
       };
     }
 
@@ -185,7 +185,7 @@ export function saveToLocalStorage(state: EventLoopState): StorageResult<void> {
 }
 
 /**
- * LocalStorageからデータを読み込み
+ * Loads data from LocalStorage
  */
 export function loadFromLocalStorage(): StorageResult<EventLoopState> {
   try {
@@ -219,7 +219,7 @@ export function loadFromLocalStorage(): StorageResult<EventLoopState> {
     const storageError = classifyStorageError(error);
     console.error('Failed to load from storage:', storageError);
 
-    // パースエラーの場合はデフォルト値を返す
+    // Return default state on parse errors
     if (storageError.type === StorageErrorType.PARSE_ERROR) {
       return {
         success: true,
@@ -235,7 +235,7 @@ export function loadFromLocalStorage(): StorageResult<EventLoopState> {
 }
 
 /**
- * LocalStorageのデータをクリア
+ * Clears data from LocalStorage
  */
 export function clearStorage(): StorageResult<void> {
   try {
@@ -258,7 +258,7 @@ export function clearStorage(): StorageResult<void> {
 }
 
 /**
- * ストレージのメタ情報を取得
+ * Retrieves storage metadata
  */
 export function getStorageMetadata(): StorageResult<StorageMetadata> {
   try {
@@ -268,7 +268,7 @@ export function getStorageMetadata(): StorageResult<StorageMetadata> {
     if (!storage) {
       return {
         success: false,
-        error: 'ストレージが利用できません',
+        error: 'Storage is not available',
       };
     }
 
@@ -289,7 +289,7 @@ export function getStorageMetadata(): StorageResult<StorageMetadata> {
     const parsed = JSON.parse(raw) as StorageSchema;
     const sizeInBytes = new Blob([raw]).size;
 
-    // LocalStorageの容量を概算（一般的に5MB）
+    // Estimate LocalStorage capacity (typically 5MB)
     const estimatedQuota = 5 * 1024 * 1024;
     let totalUsed = 0;
 
@@ -323,7 +323,7 @@ export function getStorageMetadata(): StorageResult<StorageMetadata> {
 }
 
 /**
- * ストレージの健全性チェック
+ * Checks storage health status
  */
 export function checkStorageHealth(): {
   localStorage: boolean;
@@ -347,7 +347,7 @@ export function checkStorageHealth(): {
     sessionStorage: sessionStorageAvailable,
     hasData,
     error: !localStorageAvailable && !sessionStorageAvailable
-      ? 'ストレージが利用できません。データは一時的にメモリに保存されます。'
+      ? 'Storage is not available. Data will be temporarily stored in memory.'
       : undefined,
   };
 }

@@ -1,8 +1,8 @@
 /**
  * SortableTaskCard Component
  *
- * ドラッグ&ドロップ可能なタスクカードコンポーネント。
- * @dnd-kit/sortableを使用してリスト内の並べ替えをサポートします。
+ * Drag-and-drop enabled task card component.
+ * Uses @dnd-kit/sortable to support reordering within a list.
  */
 
 import React from 'react';

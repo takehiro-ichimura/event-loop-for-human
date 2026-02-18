@@ -1,177 +1,177 @@
 /**
  * Task Type Definitions
  *
- * タスク関連の型定義を提供します。
- * EventLoop4Humanの中核となるエンティティです。
+ * Provides type definitions related to tasks.
+ * These are the core entities of EventLoop4Human.
  */
 
 /**
- * タスクが所属できるエリアの種類
+ * The types of areas a task can belong to
  *
- * - callStack: 現在実行中のタスク（最大1つ）
- * - microtaskQueue: 派生タスクのキュー（優先度高）
- * - taskQueue: 独立したタスクのキュー（優先度低）
- * - webAPI: ブロック中のタスク（待機状態）
+ * - callStack: The currently executing task (at most one)
+ * - microtaskQueue: Queue for derived tasks (high priority)
+ * - taskQueue: Queue for independent tasks (low priority)
+ * - webAPI: Blocked tasks (waiting state)
  */
 export type AreaType = 'callStack' | 'microtaskQueue' | 'taskQueue' | 'webAPI';
 
 /**
- * タスクエンティティ
+ * Task Entity
  *
- * ユーザーが管理する作業単位を表します。
+ * Represents a unit of work managed by the user.
  */
 export interface Task {
   /**
-   * タスクの一意識別子（UUID v4）
+   * Unique task identifier (UUID v4)
    * @example "123e4567-e89b-12d3-a456-426614174000"
    */
   id: string;
 
   /**
-   * タスク名（必須）
+   * Task name (required)
    * @minLength 1
    * @maxLength 200
-   * @example "メールの返信を書く"
+   * @example "Write an email reply"
    */
   name: string;
 
   /**
-   * 見積もり時間（分単位）
+   * Estimated time (in minutes)
    * @minimum 0
    * @example 30
    */
   estimatedTime: number | null;
 
   /**
-   * カテゴリ名
+   * Category name
    * @maxLength 50
-   * @example "仕事"
+   * @example "Work"
    */
   category: string | null;
 
   /**
-   * メモ
+   * Memo
    * @maxLength 1000
-   * @example "添付資料も忘れずに"
+   * @example "Don't forget the attachments"
    */
   memo: string | null;
 
   /**
-   * 作成日時（ISO 8601形式）
+   * Creation date and time (ISO 8601 format)
    * @format date-time
    * @example "2026-02-02T12:34:56.789Z"
    */
   createdAt: string;
 
   /**
-   * 現在の所属エリア
+   * Current area the task belongs to
    */
   area: AreaType;
 
   /**
-   * キュー内の順序（0から始まる整数）
-   * Call Stackでは無視されます。
+   * Position within the queue (integer starting from 0)
+   * Ignored when in the Call Stack.
    * @minimum 0
    */
   order: number;
 }
 
 /**
- * タスク作成時のオプション
+ * Options for task creation
  */
 export interface CreateTaskOptions {
   /**
-   * 見積もり時間（分単位）
+   * Estimated time (in minutes)
    */
   estimatedTime?: number;
 
   /**
-   * カテゴリ名
+   * Category name
    */
   category?: string;
 
   /**
-   * メモ
+   * Memo
    */
   memo?: string;
 }
 
 /**
- * タスク作成のための入力データ
+ * Input data for task creation
  */
 export interface TaskInput {
   /**
-   * タスク名（必須）
+   * Task name (required)
    */
   name: string;
 
   /**
-   * 投入先のエリア
+   * Target area for the task
    */
   area: AreaType;
 
   /**
-   * オプション属性
+   * Optional attributes
    */
   options?: CreateTaskOptions;
 }
 
 /**
- * タスク更新のための入力データ
+ * Input data for task update
  */
 export interface TaskUpdate {
   /**
-   * 更新対象のタスクID
+   * ID of the task to update
    */
   id: string;
 
   /**
-   * タスク名
+   * Task name
    */
   name?: string;
 
   /**
-   * 見積もり時間
+   * Estimated time
    */
   estimatedTime?: number | null;
 
   /**
-   * カテゴリ名
+   * Category name
    */
   category?: string | null;
 
   /**
-   * メモ
+   * Memo
    */
   memo?: string | null;
 }
 
 /**
- * バリデーションエラー
+ * Validation error
  */
 export interface ValidationError {
   /**
-   * エラーが発生したフィールド名
+   * Name of the field where the error occurred
    */
   field: keyof Task;
 
   /**
-   * エラーメッセージ
+   * Error message
    */
   message: string;
 }
 
 /**
- * タスクのバリデーション結果
+ * Task validation result
  */
 export interface TaskValidationResult {
   /**
-   * バリデーション成功フラグ
+   * Validation success flag
    */
   valid: boolean;
 
   /**
-   * エラーのリスト
+   * List of errors
    */
   errors: ValidationError[];
 }

@@ -1,72 +1,72 @@
 /**
  * Area Type Definitions
  *
- * エリア（Call Stack、Microtask Queue、Task Queue、Web API）関連の型定義を提供します。
+ * Provides type definitions for areas (Call Stack, Microtask Queue, Task Queue, Web API).
  */
 
 import { Task, AreaType } from './task.types';
 
 /**
- * イベントループの状態
+ * Event loop state
  *
- * 4つのエリアの現在の状態を保持します。
+ * Holds the current state of all four areas.
  */
 export interface EventLoopState {
   /**
-   * Call Stack（現在実行中のタスク）
-   * 最大1つのタスクのみを保持します。
+   * Call Stack (currently executing task)
+   * Holds at most one task.
    */
   callStack: Task | null;
 
   /**
-   * Microtask Queue（派生タスクのキュー）
-   * Task Queueより優先的に処理されます。
-   * 配列の順序が処理順序を表します。
+   * Microtask Queue (derived task queue)
+   * Processed with higher priority than Task Queue.
+   * Array order represents processing order.
    */
   microtaskQueue: Task[];
 
   /**
-   * Task Queue（独立したタスクのキュー）
-   * Microtask Queueが空の時に処理されます。
-   * 配列の順序が処理順序を表します。
+   * Task Queue (independent task queue)
+   * Processed when Microtask Queue is empty.
+   * Array order represents processing order.
    */
   taskQueue: Task[];
 
   /**
-   * Web API（ブロック中のタスク）
-   * 他者の返事待ち、ビルド待ちなど、自分では進められないタスクを保持します。
-   * 順序は特に意味を持ちません。
+   * Web API (blocked tasks)
+   * Holds tasks that cannot proceed on their own, e.g. waiting for replies or builds.
+   * Order is not significant.
    */
   webAPI: Task[];
 }
 
 /**
- * エリアの統計情報
+ * Area statistics
  */
 export interface AreaStats {
   /**
-   * エリア名
+   * Area name
    */
   area: AreaType;
 
   /**
-   * タスク数
+   * Task count
    */
   count: number;
 
   /**
-   * 見積もり時間の合計（分単位）
-   * 見積もり時間が設定されていないタスクは除外されます。
+   * Total estimated time in minutes
+   * Excludes tasks without an estimated time.
    */
   totalEstimatedTime: number;
 }
 
 /**
- * イベントループ全体の統計情報
+ * Overall event loop statistics
  */
 export interface EventLoopStats {
   /**
-   * 各エリアの統計
+   * Statistics for each area
    */
   areas: {
     callStack: AreaStats;
@@ -76,105 +76,105 @@ export interface EventLoopStats {
   };
 
   /**
-   * タスクの総数
+   * Total number of tasks
    */
   totalTasks: number;
 
   /**
-   * 見積もり時間の総計（分単位）
+   * Total estimated time in minutes
    */
   totalEstimatedTime: number;
 }
 
 /**
- * エリア間のタスク移動操作
+ * Task move operation between areas
  */
 export interface TaskMoveOperation {
   /**
-   * 移動対象のタスクID
+   * ID of the task to move
    */
   taskId: string;
 
   /**
-   * 移動元のエリア
+   * Source area
    */
   from: AreaType;
 
   /**
-   * 移動先のエリア
+   * Destination area
    */
   to: AreaType;
 
   /**
-   * 移動先での順序（キューの場合）
-   * Call Stackの場合は無視されます。
+   * Order at destination (for queues)
+   * Ignored for Call Stack.
    */
   order?: number;
 }
 
 /**
- * キュー内の並べ替え操作
+ * Reorder operation within a queue
  */
 export interface ReorderOperation {
   /**
-   * 対象のエリア（microtaskQueueまたはtaskQueueのみ）
+   * Target area (microtaskQueue or taskQueue only)
    */
   area: 'microtaskQueue' | 'taskQueue';
 
   /**
-   * 移動するタスクのID
+   * ID of the task to move
    */
   taskId: string;
 
   /**
-   * 新しいインデックス（0から始まる）
+   * New index (0-based)
    */
   newIndex: number;
 }
 
 /**
- * エリアのメタデータ
+ * Area metadata
  */
 export interface AreaMetadata {
   /**
-   * エリア名
+   * Area name
    */
   area: AreaType;
 
   /**
-   * 表示名（日本語）
+   * Display name
    */
   displayName: string;
 
   /**
-   * 説明
+   * Description
    */
   description: string;
 
   /**
-   * 最大タスク数（nullは無制限）
+   * Maximum number of tasks (null means unlimited)
    */
   maxTasks: number | null;
 
   /**
-   * 並べ替え可能フラグ
+   * Whether reordering is supported
    */
   sortable: boolean;
 
   /**
-   * アクセントカラー（16進数）
+   * Accent color (hex)
    */
   accentColor: string;
 }
 
 /**
- * すべてのエリアのメタデータ定数
+ * Metadata constants for all areas
  */
 export const AREA_METADATA: Record<AreaType, AreaMetadata> = {
   callStack: {
     area: 'callStack',
     displayName: 'Call Stack',
-    description: '現在実行中のタスク（最大1つ）',
+    description: 'Currently executing task (max 1)',
     maxTasks: 1,
     sortable: false,
     accentColor: '#ff00ff',
@@ -182,7 +182,7 @@ export const AREA_METADATA: Record<AreaType, AreaMetadata> = {
   microtaskQueue: {
     area: 'microtaskQueue',
     displayName: 'Microtask Queue',
-    description: '派生タスク（優先度高）',
+    description: 'Derived tasks (high priority)',
     maxTasks: null,
     sortable: true,
     accentColor: '#00ffff',
@@ -190,7 +190,7 @@ export const AREA_METADATA: Record<AreaType, AreaMetadata> = {
   taskQueue: {
     area: 'taskQueue',
     displayName: 'Task Queue',
-    description: '独立したタスク（優先度低）',
+    description: 'Independent tasks (low priority)',
     maxTasks: null,
     sortable: true,
     accentColor: '#00ff00',
@@ -198,7 +198,7 @@ export const AREA_METADATA: Record<AreaType, AreaMetadata> = {
   webAPI: {
     area: 'webAPI',
     displayName: 'Web API',
-    description: 'ブロック中のタスク（待機状態）',
+    description: 'Blocked tasks (waiting)',
     maxTasks: null,
     sortable: false,
     accentColor: '#ffaa00',
