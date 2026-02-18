@@ -10,28 +10,28 @@ export function validateTask(task: Partial<Task>): string[] {
 
   // Required field check: name
   if (!task.name || task.name.trim().length === 0) {
-    errors.push('タスク名は必須です');
+    errors.push('Task name is required');
   }
 
   // Length check: name (1-200 characters)
   if (task.name && task.name.length > 200) {
-    errors.push('タスク名は200文字以内で入力してください');
+    errors.push('Task name must be 200 characters or less');
   }
 
   // Length check: category (0-50 characters)
   if (task.category && task.category.length > 50) {
-    errors.push('カテゴリは50文字以内で入力してください');
+    errors.push('Category must be 50 characters or less');
   }
 
   // Length check: memo (0-1000 characters)
   if (task.memo && task.memo.length > 1000) {
-    errors.push('メモは1000文字以内で入力してください');
+    errors.push('Memo must be 1,000 characters or less');
   }
 
   // Estimated time check (must be >= 0 if provided)
   if (task.estimatedTime !== null && task.estimatedTime !== undefined) {
     if (task.estimatedTime < 0) {
-      errors.push('見積もり時間は0以上で入力してください');
+      errors.push('Estimated time must be 0 or greater');
     }
   }
 
@@ -62,11 +62,11 @@ export interface TaskNameValidationResult {
  */
 export function validateTaskName(name: string): TaskNameValidationResult {
   if (!name || name.trim().length === 0) {
-    return { valid: false, error: 'タスク名は必須です' };
+    return { valid: false, error: 'Task name is required' };
   }
 
   if (name.length > 200) {
-    return { valid: false, error: 'タスク名は200文字以内で入力してください' };
+    return { valid: false, error: 'Task name must be 200 characters or less' };
   }
 
   return { valid: true };

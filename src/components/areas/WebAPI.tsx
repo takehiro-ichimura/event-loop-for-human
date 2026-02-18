@@ -1,8 +1,8 @@
 /**
  * WebAPI Component
  *
- * Web APIエリアを表示するコンポーネント。
- * ブロック中（待機状態）のタスクを管理します。
+ * Displays the Web API area.
+ * Manages blocked (waiting) tasks.
  */
 
 import React from 'react';

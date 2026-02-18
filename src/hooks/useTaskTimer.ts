@@ -1,8 +1,8 @@
 /**
  * useTaskTimer Hook
  *
- * タスクタイマーのロジックをカプセル化するカスタムフック。
- * LocalStorageによる永続化機能を含む。
+ * A custom hook that encapsulates task timer logic.
+ * Includes persistence via LocalStorage.
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
@@ -20,9 +20,9 @@ import {
 } from '@/utils/timer';
 
 /**
- * タスクタイマーを管理するカスタムフック
- * @param taskId 対象タスクのID（nullの場合はタイマー無効）
- * @returns タイマー状態とアクション
+ * Custom hook for managing a task timer
+ * @param taskId The ID of the target task (timer is disabled when null)
+ * @returns Timer state and actions
  */
 export function useTaskTimer(taskId: string | null): UseTaskTimerReturn {
   const [timerState, setTimerState] = useState<TimerState | null>(null);
@@ -30,7 +30,7 @@ export function useTaskTimer(taskId: string | null): UseTaskTimerReturn {
   const intervalRef = useRef<number | null>(null);
   const isInitializedRef = useRef(false);
 
-  // 初期化：LocalStorageからの状態復元
+  // Initialization: restore state from LocalStorage
   useEffect(() => {
     if (isInitializedRef.current) return;
     isInitializedRef.current = true;
@@ -38,12 +38,12 @@ export function useTaskTimer(taskId: string | null): UseTaskTimerReturn {
     if (taskId) {
       const savedState = loadTimerState();
       if (savedState && savedState.taskId === taskId) {
-        // 復元した状態で経過時間を再計算
+        // Recalculate elapsed time from the restored state
         const elapsed = calculateElapsedTime(savedState);
         setTimerState(savedState);
         setElapsedTime(elapsed);
       } else {
-        // 新しいタスクの場合、タイマーを開始
+        // Start a new timer for a new task
         const newState = startTimer(taskId);
         setTimerState(newState);
         setElapsedTime(0);
@@ -52,25 +52,25 @@ export function useTaskTimer(taskId: string | null): UseTaskTimerReturn {
     }
   }, []);
 
-  // タスクID変更時の処理
+  // Handle task ID changes
   useEffect(() => {
-    // 初期化前はスキップ
+    // Skip before initialization
     if (!isInitializedRef.current) return;
 
     if (taskId) {
-      // 現在のタイマーと異なるタスクIDの場合
+      // If the task ID differs from the current timer
       if (!timerState || timerState.taskId !== taskId) {
-        // 古い状態をクリア
+        // Clear the old state
         clearTimerState();
 
-        // LocalStorageから復元を試みる
+        // Attempt to restore from LocalStorage
         const savedState = loadTimerState();
         if (savedState && savedState.taskId === taskId) {
           const elapsed = calculateElapsedTime(savedState);
           setTimerState(savedState);
           setElapsedTime(elapsed);
         } else {
-          // 新しいタイマーを開始
+          // Start a new timer
           const newState = startTimer(taskId);
           setTimerState(newState);
           setElapsedTime(0);
@@ -78,23 +78,23 @@ export function useTaskTimer(taskId: string | null): UseTaskTimerReturn {
         }
       }
     } else {
-      // タスクがない場合、タイマーをリセット
+      // Reset the timer when there is no task
       setTimerState(null);
       setElapsedTime(0);
       clearTimerState();
     }
   }, [taskId]);
 
-  // 状態変更時のLocalStorage保存
+  // Persist to LocalStorage on state changes
   useEffect(() => {
     if (timerState) {
       saveTimerState(timerState);
     }
   }, [timerState]);
 
-  // 1秒間隔の更新ロジック
+  // Update logic at 1-second intervals
   useEffect(() => {
-    // タイマーが無効または一時停止中の場合はインターバルを停止
+    // Stop the interval if the timer is inactive or paused
     if (!timerState || timerState.isPaused) {
       if (intervalRef.current !== null) {
         clearInterval(intervalRef.current);
@@ -103,16 +103,16 @@ export function useTaskTimer(taskId: string | null): UseTaskTimerReturn {
       return;
     }
 
-    // 1秒間隔で経過時間を更新
+    // Update elapsed time at 1-second intervals
     const updateElapsedTime = () => {
       const elapsed = calculateElapsedTime(timerState);
       setElapsedTime(elapsed);
     };
 
-    // 初回更新
+    // Initial update
     updateElapsedTime();
 
-    // インターバル設定
+    // Set up the interval
     intervalRef.current = window.setInterval(updateElapsedTime, 1000);
 
     return () => {
@@ -123,17 +123,17 @@ export function useTaskTimer(taskId: string | null): UseTaskTimerReturn {
     };
   }, [timerState]);
 
-  // 一時停止アクション
+  // Pause action
   const pause = useCallback(() => {
     if (timerState && !timerState.isPaused) {
       const newState = pauseTimerUtil(timerState);
       setTimerState(newState);
-      // 一時停止時の経過時間を固定
+      // Freeze the elapsed time at the moment of pausing
       setElapsedTime(calculateElapsedTime(newState));
     }
   }, [timerState]);
 
-  // 再開アクション
+  // Resume action
   const resume = useCallback(() => {
     if (timerState && timerState.isPaused) {
       const newState = resumeTimerUtil(timerState);
@@ -141,7 +141,7 @@ export function useTaskTimer(taskId: string | null): UseTaskTimerReturn {
     }
   }, [timerState]);
 
-  // 戻り値の計算
+  // Compute return values
   const isRunning = timerState !== null && !timerState.isPaused;
   const isPaused = timerState?.isPaused ?? false;
   const formattedTime = formatElapsedTime(elapsedTime);

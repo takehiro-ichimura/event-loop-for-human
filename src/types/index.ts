@@ -1,7 +1,7 @@
 /**
  * EventLoop4Human Type Definitions
  *
- * すべての型定義をエクスポートします。
+ * Exports all type definitions.
  */
 
 // Task types

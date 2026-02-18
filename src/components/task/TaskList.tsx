@@ -1,8 +1,8 @@
 /**
  * TaskList Component
  *
- * タスク一覧を表示するコンポーネント。
- * 空状態のメッセージも表示します。
+ * Displays a list of tasks.
+ * Also shows an empty state message when there are no tasks.
  */
 
 import React from 'react';

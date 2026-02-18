@@ -1,10 +1,10 @@
 /**
  * App Component
  *
- * EventLoop4Humanのルートコンポーネント。
- * useEventLoopフックを使用してイベントループの状態を管理し、
- * MainLayoutを通じて4つのエリアを表示します。
- * LocalStorageとの同期によりデータを永続化します。
+ * Root component of EventLoop4Human.
+ * Manages event loop state using the useEventLoop hook
+ * and displays four areas through MainLayout.
+ * Persists data via LocalStorage synchronization.
  */
 
 import { useEffect, useState } from 'react';
@@ -59,7 +59,7 @@ function AppContent() {
   const [warningDismissed, setWarningDismissed] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
 
-  // 初回マウント時にLocalStorageからデータを復元
+  // Restore data from LocalStorage on initial mount
   useEffect(() => {
     if (isLoaded && savedState && !initialized) {
       loadState(savedState);
@@ -69,7 +69,7 @@ function AppContent() {
     }
   }, [isLoaded, savedState, initialized, loadState]);
 
-  // 状態変更時にLocalStorageに保存（debounce付き）
+  // Save to LocalStorage on state changes (with debounce)
   useEffect(() => {
     if (initialized) {
       save(state);
@@ -107,7 +107,7 @@ function AppContent() {
     }
   };
 
-  // ローディング中
+  // Loading
   if (!isLoaded || !initialized) {
     return (
       <div style={loadingStyles.container}>

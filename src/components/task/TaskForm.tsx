@@ -1,8 +1,8 @@
 /**
  * TaskForm Component
  *
- * 新規タスク追加フォーム。
- * タスク名、投入先エリア、オプション属性を入力できます。
+ * Form for adding new tasks.
+ * Allows input of task name, target area, and optional attributes.
  */
 
 import React, { useState } from 'react';

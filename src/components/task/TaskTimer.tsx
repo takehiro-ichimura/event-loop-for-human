@@ -1,7 +1,7 @@
 /**
  * TaskTimer Component
  *
- * コールスタックで実行中のタスクの経過時間を表示するコンポーネント。
+ * Displays the elapsed time for the task currently executing in the Call Stack.
  */
 
 import React from 'react';

@@ -1,8 +1,8 @@
 /**
  * TaskEditModal Component
  *
- * タスク編集用のモーダルコンポーネント。
- * タスク名、見積もり時間、カテゴリ、メモを編集できます。
+ * Modal component for editing tasks.
+ * Allows editing of task name, estimated time, category, and memo.
  */
 
 import React, { useState, useEffect } from 'react';
@@ -152,7 +152,7 @@ export const TaskEditModal: React.FC<TaskEditModalProps> = ({
   const [memo, setMemo] = useState(task.memo || '');
   const [error, setError] = useState<string | null>(null);
 
-  // タスクが変更されたらフォームをリセット
+  // Reset form when the task changes
   useEffect(() => {
     setName(task.name);
     setEstimatedTime(task.estimatedTime?.toString() || '');
@@ -210,7 +210,7 @@ export const TaskEditModal: React.FC<TaskEditModalProps> = ({
     return null;
   }
 
-  const createdDate = new Date(task.createdAt).toLocaleString('ja-JP');
+  const createdDate = new Date(task.createdAt).toLocaleString('en-US');
 
   return (
     <div style={styles.overlay} onClick={onClose} onKeyDown={handleKeyDown}>

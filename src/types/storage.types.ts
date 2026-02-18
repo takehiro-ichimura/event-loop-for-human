@@ -1,30 +1,30 @@
 /**
  * Storage Type Definitions
  *
- * LocalStorage関連の型定義を提供します。
+ * Provides type definitions related to LocalStorage.
  */
 
 import { EventLoopState } from './area.types';
 
 /**
- * LocalStorageに保存されるデータのスキーマ
+ * Schema for data stored in LocalStorage
  */
 export interface StorageSchema {
   /**
-   * スキーマバージョン（セマンティックバージョニング）
-   * マイグレーション時に使用されます。
+   * Schema version (semantic versioning)
+   * Used during migrations.
    * @example "1.0.0"
    */
   version: string;
 
   /**
-   * イベントループの現在の状態
+   * Current state of the event loop
    */
   state: EventLoopState;
 
   /**
-   * 最終更新日時（ISO 8601形式）
-   * デバッグ用の情報です。
+   * Last modified date and time (ISO 8601 format)
+   * This information is for debugging purposes.
    * @format date-time
    * @example "2026-02-02T12:34:56.789Z"
    */
@@ -32,177 +32,177 @@ export interface StorageSchema {
 }
 
 /**
- * LocalStorageのキー定数
+ * LocalStorage key constant
  */
 export const STORAGE_KEY = 'eventloop4human:state' as const;
 
 /**
- * 現在のストレージスキーマバージョン
+ * Current storage schema version
  */
 export const STORAGE_VERSION = '1.0.0' as const;
 
 /**
- * ストレージ操作の結果
+ * Result of a storage operation
  */
 export interface StorageResult<T> {
   /**
-   * 操作成功フラグ
+   * Operation success flag
    */
   success: boolean;
 
   /**
-   * 結果データ（成功時）
+   * Result data (on success)
    */
   data?: T;
 
   /**
-   * エラーメッセージ（失敗時）
+   * Error message (on failure)
    */
   error?: string;
 }
 
 /**
- * ストレージのメタ情報
+ * Storage metadata
  */
 export interface StorageMetadata {
   /**
-   * データサイズ（バイト単位）
+   * Data size (in bytes)
    */
   sizeInBytes: number;
 
   /**
-   * LocalStorage全体の使用率（0-1の範囲）
-   * 概算値です。
+   * Overall LocalStorage usage ratio (range 0-1)
+   * This is an approximate value.
    */
   usageRatio: number;
 
   /**
-   * 最終更新日時
+   * Last modified date and time
    */
   lastModified: string;
 
   /**
-   * スキーマバージョン
+   * Schema version
    */
   version: string;
 }
 
 /**
- * ストレージエラーの種類
+ * Types of storage errors
  */
 export enum StorageErrorType {
   /**
-   * 容量超過エラー
+   * Quota exceeded error
    */
   QUOTA_EXCEEDED = 'QUOTA_EXCEEDED',
 
   /**
-   * セキュリティエラー（プライベートモードなど）
+   * Security error (e.g., private browsing mode)
    */
   SECURITY_ERROR = 'SECURITY_ERROR',
 
   /**
-   * JSONパースエラー
+   * JSON parse error
    */
   PARSE_ERROR = 'PARSE_ERROR',
 
   /**
-   * スキーマバージョン不一致
+   * Schema version mismatch
    */
   VERSION_MISMATCH = 'VERSION_MISMATCH',
 
   /**
-   * その他のエラー
+   * Other errors
    */
   UNKNOWN_ERROR = 'UNKNOWN_ERROR',
 }
 
 /**
- * ストレージエラーの詳細情報
+ * Detailed information about a storage error
  */
 export interface StorageError {
   /**
-   * エラーの種類
+   * Type of error
    */
   type: StorageErrorType;
 
   /**
-   * エラーメッセージ
+   * Error message
    */
   message: string;
 
   /**
-   * 元の例外オブジェクト
+   * Original exception object
    */
   originalError?: unknown;
 
   /**
-   * 復旧方法の提案
+   * Suggested recovery action
    */
   suggestion?: string;
 }
 
 /**
- * マイグレーション関数の型
+ * Migration function type
  */
 export type MigrationFunction = (data: any) => StorageSchema;
 
 /**
- * マイグレーション定義
+ * Migration definition
  */
 export interface MigrationDefinition {
   /**
-   * マイグレーション元のバージョン
+   * Source version for the migration
    */
   fromVersion: string;
 
   /**
-   * マイグレーション先のバージョン
+   * Target version for the migration
    */
   toVersion: string;
 
   /**
-   * マイグレーション関数
+   * Migration function
    */
   migrate: MigrationFunction;
 
   /**
-   * マイグレーションの説明
+   * Description of the migration
    */
   description: string;
 }
 
 /**
- * ストレージ設定
+ * Storage configuration
  */
 export interface StorageConfig {
   /**
-   * 保存時のdebounce時間（ミリ秒）
+   * Debounce time for saving (in milliseconds)
    * @default 300
    */
   debounceMs: number;
 
   /**
-   * 容量警告の閾値（0-1の範囲）
+   * Capacity warning threshold (range 0-1)
    * @default 0.8
    */
   warningThreshold: number;
 
   /**
-   * 自動マイグレーション有効フラグ
+   * Auto-migration enabled flag
    * @default true
    */
   autoMigrate: boolean;
 
   /**
-   * エラー時のフォールバック先
+   * Fallback storage on error
    * @default 'sessionStorage'
    */
   fallbackStorage: 'sessionStorage' | 'memory' | null;
 }
 
 /**
- * デフォルトのストレージ設定
+ * Default storage configuration
  */
 export const DEFAULT_STORAGE_CONFIG: StorageConfig = {
   debounceMs: 300,

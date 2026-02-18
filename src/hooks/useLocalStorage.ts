@@ -1,8 +1,8 @@
 /**
  * useLocalStorage Hook
  *
- * LocalStorageとの自動同期を提供するカスタムフック。
- * debounce機能付きで状態変更を効率的に保存します。
+ * A custom hook that provides automatic synchronization with LocalStorage.
+ * Efficiently persists state changes with built-in debounce functionality.
  */
 
 import { useEffect, useRef, useCallback, useState } from 'react';
@@ -11,13 +11,13 @@ import { saveToLocalStorage, loadFromLocalStorage, checkStorageHealth } from '@/
 
 export interface UseLocalStorageOptions {
   /**
-   * debounce時間（ミリ秒）
+   * Debounce duration in milliseconds
    * @default 300
    */
   debounceMs?: number;
 
   /**
-   * 初回マウント時に自動読み込みするか
+   * Whether to automatically load on initial mount
    * @default true
    */
   loadOnMount?: boolean;
@@ -25,22 +25,22 @@ export interface UseLocalStorageOptions {
 
 export interface UseLocalStorageReturn {
   /**
-   * 保存されていた状態（初回読み込み後）
+   * The persisted state (after initial load)
    */
   savedState: EventLoopState | null;
 
   /**
-   * 読み込みが完了したか
+   * Whether the initial load is complete
    */
   isLoaded: boolean;
 
   /**
-   * エラーメッセージ
+   * Error message
    */
   error: string | null;
 
   /**
-   * ストレージの健全性
+   * Storage health status
    */
   storageHealth: {
     localStorage: boolean;
@@ -49,23 +49,23 @@ export interface UseLocalStorageReturn {
   };
 
   /**
-   * 状態を保存（debounce付き）
+   * Save state (with debounce)
    */
   save: (state: EventLoopState) => void;
 
   /**
-   * 即座に保存（debounceなし）
+   * Save immediately (without debounce)
    */
   saveImmediate: (state: EventLoopState) => void;
 
   /**
-   * 状態を読み込み
+   * Load state
    */
   load: () => EventLoopState | null;
 }
 
 /**
- * LocalStorageとの同期を提供するフック
+ * Hook that provides synchronization with LocalStorage
  */
 export function useLocalStorage(
   options: UseLocalStorageOptions = {}
@@ -87,7 +87,7 @@ export function useLocalStorage(
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const latestStateRef = useRef<EventLoopState | null>(null);
 
-  // 即座に保存
+  // Save immediately
   const saveImmediate = useCallback((state: EventLoopState) => {
     const result = saveToLocalStorage(state);
     if (!result.success && result.error) {
@@ -97,7 +97,7 @@ export function useLocalStorage(
     }
   }, []);
 
-  // debounce付きで保存
+  // Save with debounce
   const save = useCallback((state: EventLoopState) => {
     latestStateRef.current = state;
 
@@ -112,7 +112,7 @@ export function useLocalStorage(
     }, debounceMs);
   }, [debounceMs, saveImmediate]);
 
-  // 状態を読み込み
+  // Load state
   const load = useCallback((): EventLoopState | null => {
     const result = loadFromLocalStorage();
     if (result.success && result.data) {
@@ -125,14 +125,14 @@ export function useLocalStorage(
     return null;
   }, []);
 
-  // 初回マウント時に読み込み
+  // Load on initial mount
   useEffect(() => {
     if (loadOnMount) {
       const loadedState = load();
       setSavedState(loadedState);
       setIsLoaded(true);
 
-      // ストレージの健全性を更新
+      // Update storage health status
       const health = checkStorageHealth();
       setStorageHealth({
         localStorage: health.localStorage,
@@ -146,12 +146,12 @@ export function useLocalStorage(
     }
   }, [loadOnMount, load]);
 
-  // クリーンアップ
+  // Cleanup
   useEffect(() => {
     return () => {
       if (debounceTimerRef.current) {
         clearTimeout(debounceTimerRef.current);
-        // 未保存の状態があれば保存
+        // Save any unsaved state before unmounting
         if (latestStateRef.current) {
           saveToLocalStorage(latestStateRef.current);
         }

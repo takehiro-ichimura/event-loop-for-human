@@ -1,9 +1,9 @@
 /**
  * TaskQueue Component
  *
- * Task Queueエリアを表示するコンポーネント。
- * 独立したタスクのキューを管理します。
- * ドラッグ&ドロップによる並べ替えをサポートします。
+ * Displays the Task Queue area.
+ * Manages a queue of independent tasks.
+ * Supports drag-and-drop reordering.
  */
 
 import React from 'react';

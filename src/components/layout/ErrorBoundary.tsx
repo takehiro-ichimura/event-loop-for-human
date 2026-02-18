@@ -1,8 +1,8 @@
 /**
  * ErrorBoundary Component
  *
- * エラーをキャッチして表示するためのコンポーネント。
- * LocalStorageエラーなどの警告も表示します。
+ * Catches and displays errors.
+ * Also shows warnings for LocalStorage errors and similar issues.
  */
 
 import React, { Component, ReactNode } from 'react';
@@ -92,10 +92,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       return (
         <div style={styles.container}>
           <h2 style={styles.title}>
-            ⚠️ エラーが発生しました
+            ⚠️ An error occurred
           </h2>
           <p style={styles.message}>
-            {this.state.error?.message || '予期しないエラーが発生しました'}
+            {this.state.error?.message || 'An unexpected error occurred'}
           </p>
           {this.state.error?.stack && (
             <pre style={styles.details}>
@@ -103,7 +103,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             </pre>
           )}
           <button style={styles.button} onClick={this.handleReset}>
-            ページを再読み込み
+            Reload Page
           </button>
         </div>
       );
@@ -116,7 +116,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 /**
  * StorageWarning Component
  *
- * LocalStorageに関する警告を表示するコンポーネント。
+ * Displays warnings related to LocalStorage issues.
  */
 export interface StorageWarningProps {
   message: string;
