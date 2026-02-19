@@ -62,6 +62,14 @@ has_git() {
     git rev-parse --show-toplevel >/dev/null 2>&1
 }
 
+# Normalize branch name by stripping known CI/platform prefixes (e.g., "claude/")
+# so that downstream logic can match the ###-feature-name pattern.
+normalize_branch_name() {
+    local branch="$1"
+    # Strip "claude/" prefix used by Claude Code on the web
+    echo "$branch" | sed 's|^claude/||'
+}
+
 check_feature_branch() {
     local branch="$1"
     local has_git_repo="$2"
@@ -72,9 +80,12 @@ check_feature_branch() {
         return 0
     fi
 
-    if [[ ! "$branch" =~ ^[0-9]{3}- ]]; then
+    local normalized
+    normalized=$(normalize_branch_name "$branch")
+
+    if [[ ! "$normalized" =~ ^[0-9]{3}- ]]; then
         echo "ERROR: Not on a feature branch. Current branch: $branch" >&2
-        echo "Feature branches should be named like: 001-feature-name" >&2
+        echo "Feature branches should be named like: 001-feature-name (or claude/001-feature-name)" >&2
         return 1
     fi
 
@@ -90,10 +101,14 @@ find_feature_dir_by_prefix() {
     local branch_name="$2"
     local specs_dir="$repo_root/specs"
 
+    # Normalize branch name (strip platform prefixes like "claude/")
+    local normalized
+    normalized=$(normalize_branch_name "$branch_name")
+
     # Extract numeric prefix from branch (e.g., "004" from "004-whatever")
-    if [[ ! "$branch_name" =~ ^([0-9]{3})- ]]; then
+    if [[ ! "$normalized" =~ ^([0-9]{3})- ]]; then
         # If branch doesn't have numeric prefix, fall back to exact match
-        echo "$specs_dir/$branch_name"
+        echo "$specs_dir/$normalized"
         return
     fi
 
