@@ -29,6 +29,7 @@ export function useTaskTimer(taskId: string | null): UseTaskTimerReturn {
   const [elapsedTime, setElapsedTime] = useState(0);
   const intervalRef = useRef<number | null>(null);
   const isInitializedRef = useRef(false);
+  const isFirstTaskIdEffectRef = useRef(true);
 
   // Initialization: restore state from LocalStorage
   useEffect(() => {
@@ -56,6 +57,12 @@ export function useTaskTimer(taskId: string | null): UseTaskTimerReturn {
   useEffect(() => {
     // Skip before initialization
     if (!isInitializedRef.current) return;
+
+    // Skip the first execution (initialization is handled by the effect above)
+    if (isFirstTaskIdEffectRef.current) {
+      isFirstTaskIdEffectRef.current = false;
+      return;
+    }
 
     if (taskId) {
       // If the task ID differs from the current timer
