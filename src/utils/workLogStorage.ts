@@ -69,17 +69,17 @@ function classifyStorageError(error: unknown): {
     if (error.name === 'QuotaExceededError' || error.code === 22) {
       return {
         type: StorageErrorType.QUOTA_EXCEEDED,
-        message: 'ログストレージの容量が不足しています',
+        message: 'Log storage quota exceeded',
         originalError: error,
-        suggestion: '古いログは自動削除されますが、それでも不足する場合は手動でクリアしてください',
+        suggestion: 'Old logs are auto-deleted, but you may need to clear them manually',
       };
     }
     if (error.name === 'SecurityError') {
       return {
         type: StorageErrorType.SECURITY_ERROR,
-        message: 'プライベートモードではLocalStorageが使用できません',
+        message: 'LocalStorage is not available in private mode',
         originalError: error,
-        suggestion: '通常モードでブラウザを開いてください',
+        suggestion: 'Please open the browser in normal mode',
       };
     }
   }
@@ -87,15 +87,15 @@ function classifyStorageError(error: unknown): {
   if (error instanceof SyntaxError) {
     return {
       type: StorageErrorType.PARSE_ERROR,
-      message: 'ログデータの形式が不正です',
+      message: 'Log data format is invalid',
       originalError: error,
-      suggestion: 'ログをリセットして再度お試しください',
+      suggestion: 'Please reset logs and try again',
     };
   }
 
   return {
     type: StorageErrorType.UNKNOWN_ERROR,
-    message: error instanceof Error ? error.message : '不明なエラーが発生しました',
+    message: error instanceof Error ? error.message : 'An unknown error occurred',
     originalError: error,
   };
 }
@@ -202,7 +202,7 @@ export function saveWorkLogs(entries: LogEntry[]): StorageResult<void> {
     if (!storage) {
       return {
         success: false,
-        error: 'ストレージが利用できません',
+        error: 'Storage is not available',
       };
     }
 
@@ -269,7 +269,7 @@ export function getWorkLogMetadata(): StorageResult<{
     if (!storage) {
       return {
         success: false,
-        error: 'ストレージが利用できません',
+        error: 'Storage is not available',
       };
     }
 

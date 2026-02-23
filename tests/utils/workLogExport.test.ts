@@ -89,7 +89,7 @@ describe('workLogExport', () => {
       // Blobの内容を確認
       const csvContent = blobArg.parts[0];
       expect(csvContent).toContain('\uFEFF'); // BOM
-      expect(csvContent).toContain('ID,タスクID,タスク名,操作,タイムスタンプ,移動元,移動先,経過時間(ms)');
+      expect(csvContent).toContain('ID,Task ID,Task Name,Operation,Timestamp,From,To,Elapsed(ms)');
       expect(csvContent).toContain('entry-1');
       expect(csvContent).toContain('Test Task');
       expect(csvContent).toContain('completed');
@@ -110,7 +110,7 @@ describe('workLogExport', () => {
       const csvContent = blobArg.parts[0];
 
       expect(csvContent).toContain('\uFEFF'); // BOM
-      expect(csvContent).toContain('ID,タスクID,タスク名,操作,タイムスタンプ,移動元,移動先,経過時間(ms)');
+      expect(csvContent).toContain('ID,Task ID,Task Name,Operation,Timestamp,From,To,Elapsed(ms)');
       expect(csvContent.split('\n').length).toBe(1); // Header only (no data rows)
     });
 

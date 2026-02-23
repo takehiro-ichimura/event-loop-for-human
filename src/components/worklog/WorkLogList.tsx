@@ -39,7 +39,7 @@ function getOperationColor(operation: LogEntry['operation']): string {
  */
 function formatTime(isoString: string): string {
   const date = new Date(isoString);
-  return date.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 }
 
 /**
@@ -70,7 +70,7 @@ export function WorkLogList({ entries }: WorkLogListProps) {
   if (entries.length === 0) {
     return (
       <div style={styles.emptyMessage}>
-        ログがありません
+        No logs
       </div>
     );
   }
@@ -105,7 +105,7 @@ export function WorkLogList({ entries }: WorkLogListProps) {
               )}
               {entry.elapsedTime !== null && (
                 <span style={styles.elapsedTime}>
-                  経過: {formatElapsedTime(entry.elapsedTime)}
+                  Elapsed: {formatElapsedTime(entry.elapsedTime)}
                 </span>
               )}
             </div>
@@ -114,7 +114,7 @@ export function WorkLogList({ entries }: WorkLogListProps) {
       </div>
       {hasMore && (
         <button onClick={handleLoadMore} style={styles.loadMoreButton}>
-          もっと見る ({entries.length - visibleCount}件)
+          Load More ({entries.length - visibleCount})
         </button>
       )}
     </div>

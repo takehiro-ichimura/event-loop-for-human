@@ -82,7 +82,7 @@ export function WorkLogFilter({ filter, onFilterChange }: WorkLogFilterProps) {
     <div style={styles.container}>
       <div style={styles.dateInputs}>
         <div style={styles.inputGroup}>
-          <label style={styles.label}>開始日</label>
+          <label style={styles.label}>Start</label>
           <input
             type="date"
             value={filter.startDate}
@@ -91,7 +91,7 @@ export function WorkLogFilter({ filter, onFilterChange }: WorkLogFilterProps) {
           />
         </div>
         <div style={styles.inputGroup}>
-          <label style={styles.label}>終了日</label>
+          <label style={styles.label}>End</label>
           <input
             type="date"
             value={filter.endDate}
@@ -102,16 +102,16 @@ export function WorkLogFilter({ filter, onFilterChange }: WorkLogFilterProps) {
       </div>
       <div style={styles.presetButtons}>
         <button onClick={handlePresetToday} style={styles.presetButton}>
-          今日
+          Today
         </button>
         <button onClick={handlePreset7Days} style={styles.presetButton}>
-          過去7日
+          7 Days
         </button>
         <button onClick={handlePreset30Days} style={styles.presetButton}>
-          過去30日
+          30 Days
         </button>
         <button onClick={handleClear} style={styles.clearButton}>
-          クリア
+          Clear
         </button>
       </div>
     </div>
