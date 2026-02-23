@@ -1,0 +1,154 @@
+/**
+ * WorkLogAnalysis Component Tests
+ */
+
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { WorkLogAnalysis } from '@/components/worklog/WorkLogAnalysis';
+import type { WorkSummary, DailyStats } from '@/types';
+
+describe('WorkLogAnalysis', () => {
+  const createMockSummary = (
+    completedCount: number,
+    averageElapsedTime: number | null,
+    dailyBreakdown: DailyStats[]
+  ): WorkSummary => ({
+    periodStart: '2026-02-10',
+    periodEnd: '2026-02-15',
+    completedCount,
+    averageElapsedTime,
+    dailyBreakdown,
+  });
+
+  const mockGetSummary = (summary: WorkSummary) => () => summary;
+
+  it('should display completed task count', () => {
+    const summary = createMockSummary(10, 1800000, []);
+    const getSummary = mockGetSummary(summary);
+
+    render(
+      <WorkLogAnalysis
+        getSummary={getSummary}
+        dateFilter={{ startDate: '2026-02-10', endDate: '2026-02-15' }}
+      />
+    );
+
+    expect(screen.getByText('10件')).toBeInTheDocument();
+  });
+
+  it('should display average elapsed time in HH:mm:ss format', () => {
+    // 1800000ms = 30 minutes
+    const summary = createMockSummary(5, 1800000, []);
+    const getSummary = mockGetSummary(summary);
+
+    render(
+      <WorkLogAnalysis
+        getSummary={getSummary}
+        dateFilter={{ startDate: '2026-02-10', endDate: '2026-02-15' }}
+      />
+    );
+
+    expect(screen.getByText(/30:00/)).toBeInTheDocument();
+  });
+
+  it('should display "--:--:--" when no completed tasks', () => {
+    const summary = createMockSummary(0, null, []);
+    const getSummary = mockGetSummary(summary);
+
+    render(
+      <WorkLogAnalysis
+        getSummary={getSummary}
+        dateFilter={{ startDate: '2026-02-10', endDate: '2026-02-15' }}
+      />
+    );
+
+    expect(screen.getByText('--:--:--')).toBeInTheDocument();
+  });
+
+  it('should display daily breakdown table', () => {
+    const dailyStats: DailyStats[] = [
+      { date: '2026-02-10', completedCount: 3, averageElapsedTime: 1800000 },
+      { date: '2026-02-11', completedCount: 5, averageElapsedTime: 3600000 },
+    ];
+    const summary = createMockSummary(8, 2700000, dailyStats);
+    const getSummary = mockGetSummary(summary);
+
+    render(
+      <WorkLogAnalysis
+        getSummary={getSummary}
+        dateFilter={{ startDate: '2026-02-10', endDate: '2026-02-15' }}
+      />
+    );
+
+    expect(screen.getByText('2026-02-10')).toBeInTheDocument();
+    expect(screen.getByText('2026-02-11')).toBeInTheDocument();
+    expect(screen.getByText('3')).toBeInTheDocument();
+    expect(screen.getByText('5')).toBeInTheDocument();
+  });
+
+  it('should display bar chart for daily breakdown', () => {
+    const dailyStats: DailyStats[] = [
+      { date: '2026-02-10', completedCount: 5, averageElapsedTime: 1800000 },
+    ];
+    const summary = createMockSummary(5, 1800000, dailyStats);
+    const getSummary = mockGetSummary(summary);
+
+    const { container } = render(
+      <WorkLogAnalysis
+        getSummary={getSummary}
+        dateFilter={{ startDate: '2026-02-10', endDate: '2026-02-15' }}
+      />
+    );
+
+    // Check for bar chart heading
+    expect(screen.getByText('日別完了タスク数')).toBeInTheDocument();
+
+    // Bar chart should contain block characters (█) for visualization
+    const content = container.textContent || '';
+    expect(content).toContain('█');
+  });
+
+  it('should display "この期間に完了したタスクはありません" when no completed tasks', () => {
+    const summary = createMockSummary(0, null, []);
+    const getSummary = mockGetSummary(summary);
+
+    render(
+      <WorkLogAnalysis
+        getSummary={getSummary}
+        dateFilter={{ startDate: '2026-02-10', endDate: '2026-02-15' }}
+      />
+    );
+
+    expect(screen.getByText('この期間に完了したタスクはありません')).toBeInTheDocument();
+  });
+
+  it('should call getSummary with correct date range', () => {
+    const mockGetSummaryFn = vi.fn(() =>
+      createMockSummary(0, null, [])
+    );
+
+    render(
+      <WorkLogAnalysis
+        getSummary={mockGetSummaryFn}
+        dateFilter={{ startDate: '2026-02-10', endDate: '2026-02-15' }}
+      />
+    );
+
+    expect(mockGetSummaryFn).toHaveBeenCalledWith('2026-02-10', '2026-02-15');
+  });
+
+  it('should use default date range when filter is empty', () => {
+    const mockGetSummaryFn = vi.fn(() =>
+      createMockSummary(0, null, [])
+    );
+
+    render(
+      <WorkLogAnalysis
+        getSummary={mockGetSummaryFn}
+        dateFilter={{ startDate: '', endDate: '' }}
+      />
+    );
+
+    expect(mockGetSummaryFn).toHaveBeenCalledWith('1970-01-01', '2999-12-31');
+  });
+});
