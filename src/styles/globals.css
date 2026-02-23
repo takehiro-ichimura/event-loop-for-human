@@ -136,9 +136,10 @@ button:disabled {
 
 /* Inputs */
 input,
-textarea {
+textarea,
+select {
   font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: 1rem;
   padding: var(--spacing-sm) var(--spacing-md);
   background-color: var(--color-bg-secondary);
   color: var(--color-text-primary);
@@ -149,12 +150,14 @@ textarea {
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   border-color: var(--color-border-active);
 }
 
 input::placeholder,
-textarea::placeholder {
+textarea::placeholder,
+select::placeholder {
   color: var(--color-text-muted);
 }
 
@@ -334,8 +337,9 @@ textarea::placeholder {
   }
 
   input,
-  textarea {
+  textarea,
+  select {
     padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: 0.75rem;
+    font-size: 1rem;
   }
 }
