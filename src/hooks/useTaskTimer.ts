@@ -60,17 +60,15 @@ export function useTaskTimer(taskId: string | null): UseTaskTimerReturn {
     if (taskId) {
       // If the task ID differs from the current timer
       if (!timerState || timerState.taskId !== taskId) {
-        // Clear the old state
-        clearTimerState();
-
-        // Attempt to restore from LocalStorage
+        // Attempt to restore from LocalStorage BEFORE clearing
         const savedState = loadTimerState();
         if (savedState && savedState.taskId === taskId) {
           const elapsed = calculateElapsedTime(savedState);
           setTimerState(savedState);
           setElapsedTime(elapsed);
         } else {
-          // Start a new timer
+          // Clear the old state and start a new timer
+          clearTimerState();
           const newState = startTimer(taskId);
           setTimerState(newState);
           setElapsedTime(0);
