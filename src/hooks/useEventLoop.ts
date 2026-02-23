@@ -1,8 +1,8 @@
 /**
  * useEventLoop Hook
  *
- * イベントループの状態管理とロジックを提供するカスタムフック。
- * Call Stack、Microtask Queue、Task Queue、Web APIの4つのエリアを管理します。
+ * A custom hook that provides state management and logic for the event loop.
+ * Manages four areas: Call Stack, Microtask Queue, Task Queue, and Web API.
  */
 
 import { useReducer, useEffect, useCallback } from 'react';
@@ -10,7 +10,7 @@ import type { Task, AreaType, EventLoopState } from '@/types';
 import { createTask, CreateTaskOptions } from '@/utils/taskFactory';
 
 /**
- * イベントループのアクション型
+ * Event loop action types
  */
 export type EventLoopAction =
   | { type: 'COMPLETE_TASK' }
@@ -23,7 +23,7 @@ export type EventLoopAction =
   | { type: 'LOAD_STATE'; payload: EventLoopState };
 
 /**
- * 初期状態
+ * Initial state
  */
 const initialState: EventLoopState = {
   callStack: null,
@@ -33,19 +33,19 @@ const initialState: EventLoopState = {
 };
 
 /**
- * キュー内のタスクにorderを付与するヘルパー関数
+ * Helper function to assign order indices to tasks in a queue
  */
 function assignOrders(tasks: Task[]): Task[] {
   return tasks.map((task, index) => ({ ...task, order: index }));
 }
 
 /**
- * イベントループのリデューサー
+ * Event loop reducer
  */
 function eventLoopReducer(state: EventLoopState, action: EventLoopAction): EventLoopState {
   switch (action.type) {
     case 'COMPLETE_TASK': {
-      // Call Stack上のタスクのみ完了可能
+      // Only tasks on the Call Stack can be completed
       if (!state.callStack) {
         return state;
       }
@@ -61,7 +61,7 @@ function eventLoopReducer(state: EventLoopState, action: EventLoopAction): Event
 
       switch (area) {
         case 'callStack':
-          // Call Stackが空の場合のみ追加可能
+          // Can only add when the Call Stack is empty
           if (state.callStack) {
             return state;
           }
@@ -94,12 +94,12 @@ function eventLoopReducer(state: EventLoopState, action: EventLoopAction): Event
     }
 
     case 'AUTO_DISPATCH': {
-      // Call Stackが空でない場合は何もしない
+      // Do nothing if the Call Stack is not empty
       if (state.callStack) {
         return state;
       }
 
-      // Microtask Queueを優先
+      // Prioritize the Microtask Queue
       if (state.microtaskQueue.length > 0) {
         const nextTask = state.microtaskQueue[0]!;
         const remainingMicrotasks = state.microtaskQueue.slice(1);
@@ -120,7 +120,7 @@ function eventLoopReducer(state: EventLoopState, action: EventLoopAction): Event
         };
       }
 
-      // Task Queueをチェック
+      // Check the Task Queue
       if (state.taskQueue.length > 0) {
         const nextTask = state.taskQueue[0]!;
         const remainingTasks = state.taskQueue.slice(1);
@@ -145,7 +145,7 @@ function eventLoopReducer(state: EventLoopState, action: EventLoopAction): Event
     }
 
     case 'BLOCK_TASK': {
-      // Call Stack上のタスクをWeb APIに移動
+      // Move the task on the Call Stack to Web API
       if (!state.callStack) {
         return state;
       }
@@ -169,7 +169,7 @@ function eventLoopReducer(state: EventLoopState, action: EventLoopAction): Event
     case 'MOVE_TASK': {
       const { taskId, to } = action.payload;
 
-      // Web APIからタスクを探す
+      // Find the task in Web API
       const taskIndex = state.webAPI.findIndex(t => t.id === taskId);
       if (taskIndex === -1) {
         return state;
@@ -229,7 +229,7 @@ function eventLoopReducer(state: EventLoopState, action: EventLoopAction): Event
         return state;
       }
 
-      // 配列から削除して新しい位置に挿入
+      // Remove from the array and insert at the new position
       const removedTasks = queue.splice(currentIndex, 1);
       if (removedTasks.length === 0 || !removedTasks[0]) {
         return state;
@@ -245,7 +245,7 @@ function eventLoopReducer(state: EventLoopState, action: EventLoopAction): Event
     case 'UPDATE_TASK': {
       const { id, name, estimatedTime, category, memo } = action.payload;
 
-      // Call Stackをチェック
+      // Check the Call Stack
       if (state.callStack?.id === id) {
         const updatedTask: Task = {
           id: state.callStack.id,
@@ -263,7 +263,7 @@ function eventLoopReducer(state: EventLoopState, action: EventLoopAction): Event
         };
       }
 
-      // Microtask Queueをチェック
+      // Check the Microtask Queue
       const microtaskIndex = state.microtaskQueue.findIndex(t => t.id === id);
       if (microtaskIndex !== -1) {
         const newQueue = [...state.microtaskQueue];
@@ -284,7 +284,7 @@ function eventLoopReducer(state: EventLoopState, action: EventLoopAction): Event
         };
       }
 
-      // Task Queueをチェック
+      // Check the Task Queue
       const taskIndex = state.taskQueue.findIndex(t => t.id === id);
       if (taskIndex !== -1) {
         const newQueue = [...state.taskQueue];
@@ -305,7 +305,7 @@ function eventLoopReducer(state: EventLoopState, action: EventLoopAction): Event
         };
       }
 
-      // Web APIをチェック
+      // Check Web API
       const webAPIIndex = state.webAPI.findIndex(t => t.id === id);
       if (webAPIIndex !== -1) {
         const newWebAPI = [...state.webAPI];
@@ -339,7 +339,7 @@ function eventLoopReducer(state: EventLoopState, action: EventLoopAction): Event
 }
 
 /**
- * useEventLoop フックの戻り値の型
+ * Return type of the useEventLoop hook
  */
 export interface UseEventLoopReturn {
   state: EventLoopState;
@@ -353,15 +353,15 @@ export interface UseEventLoopReturn {
 }
 
 /**
- * イベントループの状態管理フック
+ * State management hook for the event loop
  */
 export function useEventLoop(): UseEventLoopReturn {
   const [state, dispatch] = useReducer(eventLoopReducer, initialState);
 
-  // Call Stackが空になったら自動的に次のタスクを投入
+  // Automatically dispatch the next task when the Call Stack becomes empty
   useEffect(() => {
     if (state.callStack === null) {
-      // 次のマイクロタスクまで待ってから投入（アニメーションのため）
+      // Wait until the next microtask before dispatching (for animation purposes)
       const timer = setTimeout(() => {
         dispatch({ type: 'AUTO_DISPATCH' });
       }, 300);

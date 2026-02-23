@@ -1,9 +1,9 @@
 /**
  * MainLayout Component
  *
- * 4つのエリア（Call Stack、Microtask Queue、Task Queue、Web API）を
- * グリッドレイアウトで配置するメインレイアウトコンポーネント。
- * レスポンシブ対応：768px以下で縦積みレイアウト
+ * Main layout component that arranges four areas (Call Stack, Microtask Queue,
+ * Task Queue, Web API) in a grid layout.
+ * Responsive: stacks vertically at 768px and below.
  */
 
 import React from 'react';

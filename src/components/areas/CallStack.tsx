@@ -1,8 +1,8 @@
 /**
  * CallStack Component
  *
- * Call Stackエリアを表示するコンポーネント。
- * 現在実行中のタスク（最大1つ）を表示し、完了とブロック操作を提供します。
+ * Displays the Call Stack area.
+ * Shows the currently executing task (max 1) with complete and block actions.
  */
 
 import React from 'react';

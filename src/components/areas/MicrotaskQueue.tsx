@@ -1,9 +1,9 @@
 /**
  * MicrotaskQueue Component
  *
- * Microtask Queueエリアを表示するコンポーネント。
- * Task Queueより優先度が高い派生タスクのキューを管理します。
- * ドラッグ&ドロップによる並べ替えをサポートします。
+ * Displays the Microtask Queue area.
+ * Manages a queue of derived tasks with higher priority than Task Queue.
+ * Supports drag-and-drop reordering.
  */
 
 import React from 'react';
