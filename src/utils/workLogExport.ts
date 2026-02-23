@@ -15,7 +15,7 @@ export function exportToCSV(entries: LogEntry[]): void {
   try {
     // UTF-8 BOM付きヘッダー
     const BOM = '\uFEFF';
-    const headers = ['ID', 'タスクID', 'タスク名', '操作', 'タイムスタンプ', '移動元', '移動先', '経過時間(ms)'];
+    const headers = ['ID', 'Task ID', 'Task Name', 'Operation', 'Timestamp', 'From', 'To', 'Elapsed(ms)'];
 
     // CSVデータ作成
     const rows = entries.map(entry => [

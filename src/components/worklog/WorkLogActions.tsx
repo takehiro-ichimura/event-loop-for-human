@@ -24,7 +24,7 @@ export function WorkLogActions({
   onExportJSON,
 }: WorkLogActionsProps) {
   const handleClearAll = () => {
-    if (window.confirm(`全 ${totalCount} 件のログをクリアしますか？この操作は取り消せません。`)) {
+    if (window.confirm(`Clear all ${totalCount} logs? This action cannot be undone.`)) {
       onClearAll();
     }
   };
@@ -32,14 +32,14 @@ export function WorkLogActions({
   return (
     <div style={styles.container}>
       <button onClick={handleClearAll} style={styles.clearButton}>
-        全 {totalCount} 件をクリア
+        Clear All ({totalCount})
       </button>
       <div style={styles.exportButtons}>
         <button onClick={onExportCSV} style={styles.exportButton}>
-          CSV出力
+          CSV Export
         </button>
         <button onClick={onExportJSON} style={styles.exportButton}>
-          JSON出力
+          JSON Export
         </button>
       </div>
     </div>

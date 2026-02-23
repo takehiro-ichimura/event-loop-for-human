@@ -34,7 +34,7 @@ export function SidebarTabs({ tasksTab, logsTab }: SidebarTabsProps) {
             ...(activeTab === 'tasks' ? styles.tabButtonActive : {}),
           }}
         >
-          タスク追加
+          Add Task
         </button>
         <button
           onClick={() => setActiveTab('logs')}
@@ -43,7 +43,7 @@ export function SidebarTabs({ tasksTab, logsTab }: SidebarTabsProps) {
             ...(activeTab === 'logs' ? styles.tabButtonActive : {}),
           }}
         >
-          ログ
+          Logs
         </button>
       </div>
 

@@ -16,7 +16,7 @@ export const DailyBarChart: React.FC<DailyBarChartProps> = ({ dailyStats }) => {
   if (dailyStats.length === 0) {
     return (
       <div style={{ color: 'var(--muted-text, #555)' }}>
-        データがありません
+        No data
       </div>
     );
   }
@@ -46,7 +46,7 @@ export const DailyBarChart: React.FC<DailyBarChartProps> = ({ dailyStats }) => {
             {generateBar(stat.completedCount)}
           </span>
           <span style={{ color: 'var(--primary-text, #00ff00)', minWidth: '50px' }}>
-            {stat.completedCount}件
+            {stat.completedCount}
           </span>
         </div>
       ))}

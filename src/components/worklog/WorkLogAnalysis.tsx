@@ -47,17 +47,17 @@ export const WorkLogAnalysis: React.FC<WorkLogAnalysisProps> = ({
       {/* サマリー */}
       <div style={{ marginBottom: '16px' }}>
         <h3 style={{ color: 'var(--accent-cyan, #00ffff)', marginBottom: '8px', fontSize: '16px' }}>
-          📊 作業サマリー
+          Work Summary
         </h3>
         <div style={{ display: 'flex', gap: '24px', fontSize: '14px' }}>
           <div>
-            <span style={{ color: 'var(--muted-text, #555)' }}>完了タスク数: </span>
+            <span style={{ color: 'var(--muted-text, #555)' }}>Completed: </span>
             <span style={{ color: 'var(--primary-text, #00ff00)', fontWeight: 'bold' }}>
-              {summary.completedCount}件
+              {summary.completedCount}
             </span>
           </div>
           <div>
-            <span style={{ color: 'var(--muted-text, #555)' }}>平均所要時間: </span>
+            <span style={{ color: 'var(--muted-text, #555)' }}>Avg Time: </span>
             <span style={{ color: 'var(--primary-text, #00ff00)', fontWeight: 'bold' }}>
               {summary.averageElapsedTime !== null
                 ? formatElapsedTime(summary.averageElapsedTime)
@@ -71,7 +71,7 @@ export const WorkLogAnalysis: React.FC<WorkLogAnalysisProps> = ({
       {summary.dailyBreakdown.length > 0 && (
         <div style={{ marginBottom: '16px' }}>
           <h4 style={{ color: 'var(--accent-cyan, #00ffff)', marginBottom: '8px', fontSize: '14px' }}>
-            日別内訳
+            Daily Breakdown
           </h4>
           <table
             style={{
@@ -84,13 +84,13 @@ export const WorkLogAnalysis: React.FC<WorkLogAnalysisProps> = ({
             <thead>
               <tr style={{ borderBottom: '1px solid var(--border-color, #333)' }}>
                 <th style={{ textAlign: 'left', padding: '8px', color: 'var(--muted-text, #555)' }}>
-                  日付
+                  Date
                 </th>
                 <th style={{ textAlign: 'right', padding: '8px', color: 'var(--muted-text, #555)' }}>
-                  完了数
+                  Done
                 </th>
                 <th style={{ textAlign: 'right', padding: '8px', color: 'var(--muted-text, #555)' }}>
-                  平均時間
+                  Avg Time
                 </th>
               </tr>
             </thead>
@@ -119,7 +119,7 @@ export const WorkLogAnalysis: React.FC<WorkLogAnalysisProps> = ({
       {summary.dailyBreakdown.length > 0 && (
         <div>
           <h4 style={{ color: 'var(--accent-cyan, #00ffff)', marginBottom: '8px', fontSize: '14px' }}>
-            日別完了タスク数
+            Daily Completed Tasks
           </h4>
           <DailyBarChart dailyStats={summary.dailyBreakdown} />
         </div>
@@ -128,7 +128,7 @@ export const WorkLogAnalysis: React.FC<WorkLogAnalysisProps> = ({
       {/* データなしメッセージ */}
       {summary.completedCount === 0 && (
         <div style={{ color: 'var(--muted-text, #555)', textAlign: 'center', padding: '16px' }}>
-          この期間に完了したタスクはありません
+          No completed tasks in this period
         </div>
       )}
     </div>
