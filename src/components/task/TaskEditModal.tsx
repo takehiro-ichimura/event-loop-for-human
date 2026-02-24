@@ -79,7 +79,7 @@ const styles = {
   },
   input: {
     fontFamily: theme.fonts.mono,
-    fontSize: '16px',
+    fontSize: '14px',
     color: theme.colors.text.primary,
     backgroundColor: theme.colors.background.primary,
     border: `1px solid ${theme.colors.border.default}`,

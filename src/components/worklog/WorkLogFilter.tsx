@@ -152,7 +152,7 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: theme.borderRadius.sm,
     color: theme.colors.text.primary,
     fontFamily: theme.fonts.mono,
-    fontSize: '16px',
+    fontSize: '12px',
   },
   presetButtons: {
     display: 'flex',
