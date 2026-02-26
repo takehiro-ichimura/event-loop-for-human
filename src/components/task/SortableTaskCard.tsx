@@ -67,7 +67,7 @@ export const SortableTaskCard: React.FC<SortableTaskCardProps> = ({
           {...attributes}
           {...listeners}
         >
-          <div style={styles.dragHandle}>⋮⋮</div>
+          <div style={styles.dragHandle}>::</div>
         </div>
         <TaskCard
           task={task}

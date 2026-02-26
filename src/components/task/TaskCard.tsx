@@ -159,12 +159,12 @@ export const TaskCard: React.FC<TaskCardProps> = ({
         <div style={styles.attributes}>
           {task.estimatedTime && (
             <span style={styles.attribute}>
-              ⏱ {task.estimatedTime}min
+              @ {task.estimatedTime}min
             </span>
           )}
           {task.category && (
             <span style={styles.attribute}>
-              📁 {task.category}
+              [#] {task.category}
             </span>
           )}
         </div>

@@ -218,7 +218,7 @@ export const TaskEditModal: React.FC<TaskEditModalProps> = ({
         <div style={styles.header}>
           <h3 style={styles.title}>Edit Task</h3>
           <button style={styles.closeButton} onClick={onClose}>
-            ×
+            [x]
           </button>
         </div>
 

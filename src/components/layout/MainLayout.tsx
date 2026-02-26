@@ -120,7 +120,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={styles.logo}>
-          <span style={styles.logoIcon}>🔄</span>
+          <span style={styles.logoIcon}>&lt;/&gt;</span>
           EventLoop4Human
         </h1>
       </header>
