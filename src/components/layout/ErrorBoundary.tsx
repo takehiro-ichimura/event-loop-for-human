@@ -92,7 +92,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       return (
         <div style={styles.container}>
           <h2 style={styles.title}>
-            ⚠️ An error occurred
+            [!] An error occurred
           </h2>
           <p style={styles.message}>
             {this.state.error?.message || 'An unexpected error occurred'}
@@ -165,13 +165,13 @@ export const StorageWarning: React.FC<StorageWarningProps> = ({
 }) => {
   return (
     <div style={warningStyles.container}>
-      <span style={warningStyles.icon}>⚠️</span>
+      <span style={warningStyles.icon}>[!]</span>
       <div style={warningStyles.content}>
         <p style={warningStyles.message}>{message}</p>
       </div>
       {onDismiss && (
         <button style={warningStyles.dismiss} onClick={onDismiss}>
-          ×
+          [x]
         </button>
       )}
     </div>

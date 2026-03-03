@@ -206,7 +206,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
         style={styles.collapsibleHeader}
         onClick={() => setShowOptions(!showOptions)}
       >
-        {showOptions ? '▼' : '▶'} Optional Attributes
+        {showOptions ? 'v' : '>'} Optional Attributes
       </div>
 
       {showOptions && (
